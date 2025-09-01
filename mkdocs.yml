@@ -6,15 +6,15 @@
 ---
 # yamllint disable rule:line-length
 site_name: >-
-  opentemplate
+  pynudger
 site_description: >-
-  All-in-one Python template. One click. Everything included.
+  opennudge Python linter (naming conventions and other automated checks)
 site_url: >-
-  https://open-nudge.github.io/opentemplate/
+  https://open-nudge.github.io/pynudger/
 repo_url: >-
-  https://github.com/open-nudge/opentemplate
+  https://github.com/open-nudge/pynudger
 repo_name: >-
-  open-nudge/opentemplate
+  open-nudge/pynudger
 # yamllint enable rule:line-length
 
 exclude_docs: |

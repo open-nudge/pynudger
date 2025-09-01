@@ -7,10 +7,10 @@
 
 from __future__ import annotations
 
-import opentemplate
+import pynudger
 
 
 def test_version() -> None:
     """Smoke test package version."""
     # nosemgrep
-    assert opentemplate.__version__ != ""
+    assert pynudger.__version__ != ""
