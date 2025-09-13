@@ -3,12 +3,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Pynudger is an official opennudge linter."""
+"""Pynudger entrypoint."""
 
 from __future__ import annotations
 
-from importlib.metadata import version
+if __name__ == "__main__":  # pragma: no cover
+    from pynudger import _cli
 
-__version__ = version("pynudger")
-
-del version
+    _cli.main()

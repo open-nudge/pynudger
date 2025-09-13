@@ -71,6 +71,8 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
+  "lintkit[rich]>=0.2.1",
+  "loadfig>=0.1.0",
 ]
 
 urls.Changelog = "https://github.com/open-nudge/pynudger/blob/master/CHANGELOG.md"
@@ -422,7 +424,9 @@ source_pkgs = [
   "pynudger",
 ]
 omit = [
-  "src/pynudger/**"
+  "src/pynudger/**",
+  "src/pynudger/__main__.py",
+  "**/pynudger/__main__.py",
 ]
 
 [tool.coverage.paths]
@@ -582,6 +586,9 @@ reportPrivateUsage = "none"
 # Highlights non-issues in many cases and
 # hard to turn off file by file
 reportImportCycles = "none"
+# More trouble than it's worth with lintkit
+reportImplicitOverride = "none"
+reportIncompatibleMethodOverride = "none"
 
 extraPaths = [
   #

@@ -5,7 +5,7 @@
 groups = ["default", "dev-all", "dev-branch", "dev-citation", "dev-commit", "dev-docs", "dev-executable", "dev-file", "dev-generation", "dev-github", "dev-ini", "dev-json", "dev-legal", "dev-markdown", "dev-pre-commit", "dev-pyproject", "dev-pytest", "dev-python", "dev-release", "dev-security", "dev-shell", "dev-symlink", "dev-tests", "dev-text", "dev-toml", "dev-typing", "dev-yaml"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:77d2c2749d7205fdcafdf2a3f9012b15f082c83d20c54dae99dfef8df46943d5"
+content_hash = "sha256:8133b639cd17eced65d08316e4a4fbe4f567831afeac912c84d3bcaa381760f8"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -217,7 +217,7 @@ files = [
 
 [[package]]
 name = "basedpyright"
-version = "1.31.3"
+version = "1.31.4"
 requires_python = ">=3.8"
 summary = "static type checking for Python (but based)"
 groups = ["dev-all", "dev-typing"]
@@ -225,8 +225,8 @@ dependencies = [
     "nodejs-wheel-binaries>=20.13.1",
 ]
 files = [
-    {file = "basedpyright-1.31.3-py3-none-any.whl", hash = "sha256:bdb0b5a9abe287a023d330fc71eaed181aaffd48f1dec59567f912cf716f38ff"},
-    {file = "basedpyright-1.31.3.tar.gz", hash = "sha256:c77bff2dc7df4fe09c0ee198589d8d24faaf8bfd883ee9e0af770b1a275a58f8"},
+    {file = "basedpyright-1.31.4-py3-none-any.whl", hash = "sha256:055e4a38024bd653be12d6216c1cfdbee49a1096d342b4d5f5b4560f7714b6fc"},
+    {file = "basedpyright-1.31.4.tar.gz", hash = "sha256:2450deb16530f7c88c1a7da04530a079f9b0b18ae1c71cb6f812825b3b82d0b1"},
 ]
 
 [[package]]
@@ -382,6 +382,7 @@ ref = "b6045d78aac9e02b039703b030588d54d53262ac"
 revision = "b6045d78aac9e02b039703b030588d54d53262ac"
 summary = "Command line program to validate and convert CITATION.cff files."
 groups = ["dev-all", "dev-citation"]
+marker = "python_version == \"3.11\""
 dependencies = [
     "click<9,>=7.0",
     "jsonschema<5,>=4.18.0",
@@ -749,57 +750,57 @@ files = [
 
 [[package]]
 name = "cyclonedx-bom"
-version = "7.0.0"
+version = "7.1.0"
 requires_python = "<4.0,>=3.9"
 summary = "CycloneDX Software Bill of Materials (SBOM) generator for Python projects and environments"
 groups = ["dev-all", "dev-release"]
 dependencies = [
     "chardet<6.0,>=5.1",
-    "cyclonedx-python-lib[validation]<11,>=8.0",
+    "cyclonedx-python-lib[validation]<12,>=8.0",
     "packageurl-python<2,>=0.11",
     "packaging<26,>=22",
     "pip-requirements-parser<33.0,>=32.0",
     "tomli<3.0.0,>=2.0.1; python_version < \"3.11\"",
 ]
 files = [
-    {file = "cyclonedx_bom-7.0.0-py3-none-any.whl", hash = "sha256:3efeec32c099a5b05cc0f73ebd70bbab66549950f046be07da6efc3eae8cdaed"},
-    {file = "cyclonedx_bom-7.0.0.tar.gz", hash = "sha256:43395dd779092087a1ddc132b0c2025741b60224932e5f3baab817b8ac8c55b7"},
+    {file = "cyclonedx_bom-7.1.0-py3-none-any.whl", hash = "sha256:f39bff01c488c229e249340f5aad2878060301194fe557e473e043125f87017e"},
+    {file = "cyclonedx_bom-7.1.0.tar.gz", hash = "sha256:dbaa3cecb1d26818963cd5f8e32e9cab41fd9baefedde0781ec134ab3bec1496"},
 ]
 
 [[package]]
 name = "cyclonedx-python-lib"
-version = "10.5.0"
+version = "11.0.0"
 requires_python = "<4.0,>=3.9"
 summary = "Python library for CycloneDX"
 groups = ["dev-all", "dev-release"]
 dependencies = [
     "license-expression<31,>=30",
     "packageurl-python<2,>=0.11",
-    "py-serializable<3.0.0,>=2.0.0",
+    "py-serializable<3.0.0,>=2.1.0",
     "sortedcontainers<3.0.0,>=2.4.0",
     "typing-extensions<5.0,>=4.6; python_version < \"3.13\"",
 ]
 files = [
-    {file = "cyclonedx_python_lib-10.5.0-py3-none-any.whl", hash = "sha256:e9531555b751a5cb940b334e510141813f37e774929562d2679dbc4868b56d02"},
-    {file = "cyclonedx_python_lib-10.5.0.tar.gz", hash = "sha256:49b8bdeb4c7aeea66e3c83739523ba88a3440fed5fe2c57ac942a9e335cf410a"},
+    {file = "cyclonedx_python_lib-11.0.0-py3-none-any.whl", hash = "sha256:4bcaebf381daf63c8a9badc7a7132704ed461b6822c4cc513beeb28ff95d7858"},
+    {file = "cyclonedx_python_lib-11.0.0.tar.gz", hash = "sha256:d51d456c01cfc42378a2282ef35858fc809162ef13d8cce2af6c4d16f788217e"},
 ]
 
 [[package]]
 name = "cyclonedx-python-lib"
-version = "10.5.0"
+version = "11.0.0"
 extras = ["validation"]
 requires_python = "<4.0,>=3.9"
 summary = "Python library for CycloneDX"
 groups = ["dev-all", "dev-release"]
 dependencies = [
-    "cyclonedx-python-lib==10.5.0",
+    "cyclonedx-python-lib==11.0.0",
     "jsonschema[format-nongpl]<5.0,>=4.25",
     "lxml<7,>=4",
     "referencing>=0.28.4",
 ]
 files = [
-    {file = "cyclonedx_python_lib-10.5.0-py3-none-any.whl", hash = "sha256:e9531555b751a5cb940b334e510141813f37e774929562d2679dbc4868b56d02"},
-    {file = "cyclonedx_python_lib-10.5.0.tar.gz", hash = "sha256:49b8bdeb4c7aeea66e3c83739523ba88a3440fed5fe2c57ac942a9e335cf410a"},
+    {file = "cyclonedx_python_lib-11.0.0-py3-none-any.whl", hash = "sha256:4bcaebf381daf63c8a9badc7a7132704ed461b6822c4cc513beeb28ff95d7858"},
+    {file = "cyclonedx_python_lib-11.0.0.tar.gz", hash = "sha256:d51d456c01cfc42378a2282ef35858fc809162ef13d8cce2af6c4d16f788217e"},
 ]
 
 [[package]]
@@ -1156,7 +1157,7 @@ files = [
 
 [[package]]
 name = "griffe"
-version = "1.13.0"
+version = "1.14.0"
 requires_python = ">=3.9"
 summary = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
 groups = ["dev-all", "dev-docs"]
@@ -1164,8 +1165,8 @@ dependencies = [
     "colorama>=0.4",
 ]
 files = [
-    {file = "griffe-1.13.0-py3-none-any.whl", hash = "sha256:470fde5b735625ac0a36296cd194617f039e9e83e301fcbd493e2b58382d0559"},
-    {file = "griffe-1.13.0.tar.gz", hash = "sha256:246ea436a5e78f7fbf5f24ca8a727bb4d2a4b442a2959052eea3d0bfe9a076e0"},
+    {file = "griffe-1.14.0-py3-none-any.whl", hash = "sha256:0e9d52832cccf0f7188cfe585ba962d2674b241c01916d780925df34873bceb0"},
+    {file = "griffe-1.14.0.tar.gz", hash = "sha256:9d2a15c1eca966d68e00517de5d69dd1bc5c9f2335ef6c1775362ba5b8651a13"},
 ]
 
 [[package]]
@@ -1179,7 +1180,7 @@ files = [
 
 [[package]]
 name = "hypothesis"
-version = "6.138.13"
+version = "6.138.14"
 requires_python = ">=3.9"
 summary = "A library for property-based testing"
 groups = ["dev-all", "dev-tests", "dev-typing"]
@@ -1189,19 +1190,19 @@ dependencies = [
     "sortedcontainers<3.0.0,>=2.1.0",
 ]
 files = [
-    {file = "hypothesis-6.138.13-py3-none-any.whl", hash = "sha256:09f1130deb08e5d12fb3b59b55c113fd79debaaab9b224ffac17be8341de4326"},
-    {file = "hypothesis-6.138.13.tar.gz", hash = "sha256:2bea91629b8b3bb103a5b51442b1037cede3aae26e56ec063c52b9d5d8eaf70b"},
+    {file = "hypothesis-6.138.14-py3-none-any.whl", hash = "sha256:1a702ecfff7034b3252d7a83328093388641cdba863197169559839e841c2154"},
+    {file = "hypothesis-6.138.14.tar.gz", hash = "sha256:5c1aa1ce3f1094b5c04ea03476017695bda408a174330e5275e40ddd06d3307a"},
 ]
 
 [[package]]
 name = "identify"
-version = "2.6.13"
+version = "2.6.14"
 requires_python = ">=3.9"
 summary = "File identification library for Python"
 groups = ["dev-all", "dev-pre-commit"]
 files = [
-    {file = "identify-2.6.13-py2.py3-none-any.whl", hash = "sha256:60381139b3ae39447482ecc406944190f690d4a2997f2584062089848361b33b"},
-    {file = "identify-2.6.13.tar.gz", hash = "sha256:da8d6c828e773620e13bfa86ea601c5a5310ba4bcd65edf378198b56a1f9fb32"},
+    {file = "identify-2.6.14-py2.py3-none-any.whl", hash = "sha256:11a073da82212c6646b1f39bb20d4483bfb9543bd5566fec60053c4bb309bf2e"},
+    {file = "identify-2.6.14.tar.gz", hash = "sha256:663494103b4f717cb26921c52f8751363dc89db64364cd836a9bf1535f53cd6a"},
 ]
 
 [[package]]
@@ -1557,6 +1558,47 @@ files = [
 ]
 
 [[package]]
+name = "lintkit"
+version = "0.2.1"
+requires_python = ">=3.11"
+summary = "Build your own linter in minutes - from Python code to config files (YAML, JSON, TOML)"
+groups = ["default"]
+dependencies = [
+    "wrapt>=1",
+]
+files = [
+    {file = "lintkit-0.2.1-py3-none-any.whl", hash = "sha256:892bb0d9aabaa49e88fa874e92a865f3c55348f201e8f324703691bf1875caa6"},
+    {file = "lintkit-0.2.1.tar.gz", hash = "sha256:df3eeef398645bfc31a6a0859dffc2d997f2110b8ebab129ebd7cb67a0c3d87a"},
+]
+
+[[package]]
+name = "lintkit"
+version = "0.2.1"
+extras = ["rich"]
+requires_python = ">=3.11"
+summary = "Build your own linter in minutes - from Python code to config files (YAML, JSON, TOML)"
+groups = ["default"]
+dependencies = [
+    "lintkit==0.2.1",
+    "rich>=13",
+]
+files = [
+    {file = "lintkit-0.2.1-py3-none-any.whl", hash = "sha256:892bb0d9aabaa49e88fa874e92a865f3c55348f201e8f324703691bf1875caa6"},
+    {file = "lintkit-0.2.1.tar.gz", hash = "sha256:df3eeef398645bfc31a6a0859dffc2d997f2110b8ebab129ebd7cb67a0c3d87a"},
+]
+
+[[package]]
+name = "loadfig"
+version = "0.1.0"
+requires_python = ">=3.11"
+summary = "One-liner Python pyproject config loader. Lightweight, simple, and VCS-aware with root auto-discovery."
+groups = ["default"]
+files = [
+    {file = "loadfig-0.1.0-py3-none-any.whl", hash = "sha256:3c8d15fbb79888782e1e86e64a937881defd00df89a6f7990044f2f865fc41c0"},
+    {file = "loadfig-0.1.0.tar.gz", hash = "sha256:dcf14e9f1daa027b90d4811314f97531de1f00aa3520e477f5025de36afbc158"},
+]
+
+[[package]]
 name = "lxml"
 version = "6.0.1"
 requires_python = ">=3.8"
@@ -1642,7 +1684,7 @@ files = [
 
 [[package]]
 name = "markdown"
-version = "3.8.2"
+version = "3.9"
 requires_python = ">=3.9"
 summary = "Python implementation of John Gruber's Markdown."
 groups = ["dev-all", "dev-docs"]
@@ -1650,8 +1692,8 @@ dependencies = [
     "importlib-metadata>=4.4; python_version < \"3.10\"",
 ]
 files = [
-    {file = "markdown-3.8.2-py3-none-any.whl", hash = "sha256:5c83764dbd4e00bdd94d85a19b8d55ccca20fe35b2e678a1422b380324dd5f24"},
-    {file = "markdown-3.8.2.tar.gz", hash = "sha256:247b9a70dd12e27f67431ce62523e675b866d254f900c4fe75ce3dda62237c45"},
+    {file = "markdown-3.9-py3-none-any.whl", hash = "sha256:9f4d91ed810864ea88a6f32c07ba8bee1346c0cc1f6b1f9f6c822f2a9667d280"},
+    {file = "markdown-3.9.tar.gz", hash = "sha256:d2900fe1782bd33bdbbd56859defef70c2e78fc46668f8eb9df3128138f2cb6a"},
 ]
 
 [[package]]
@@ -1659,7 +1701,7 @@ name = "markdown-it-py"
 version = "3.0.0"
 requires_python = ">=3.8"
 summary = "Python port of markdown-it. Markdown parsing, done right!"
-groups = ["dev-all", "dev-docs", "dev-markdown", "dev-security"]
+groups = ["default", "dev-all", "dev-docs", "dev-markdown", "dev-security"]
 dependencies = [
     "mdurl~=0.1",
 ]
@@ -1878,7 +1920,7 @@ name = "mdurl"
 version = "0.1.2"
 requires_python = ">=3.7"
 summary = "Markdown URL utilities"
-groups = ["dev-all", "dev-docs", "dev-markdown", "dev-security"]
+groups = ["default", "dev-all", "dev-docs", "dev-markdown", "dev-security"]
 files = [
     {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
     {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
@@ -2234,13 +2276,13 @@ files = [
 
 [[package]]
 name = "more-itertools"
-version = "10.7.0"
+version = "10.8.0"
 requires_python = ">=3.9"
 summary = "More routines for operating on iterables, beyond itertools"
 groups = ["dev-all", "dev-markdown"]
 files = [
-    {file = "more_itertools-10.7.0-py3-none-any.whl", hash = "sha256:d43980384673cb07d2f7d2d918c616b30c659c089ee23953f601d6609c67510e"},
-    {file = "more_itertools-10.7.0.tar.gz", hash = "sha256:9fddd5403be01a94b204faadcff459ec3568cf110265d3c54323e1e866ad29d3"},
+    {file = "more_itertools-10.8.0-py3-none-any.whl", hash = "sha256:52d4362373dcf7c52546bc4af9a86ee7c4579df9a8dc268be0a2f949d376cc9b"},
+    {file = "more_itertools-10.8.0.tar.gz", hash = "sha256:f638ddf8a1a0d134181275fb5d58b086ead7c6a72429ad725c67503f13ba30bd"},
 ]
 
 [[package]]
@@ -3113,7 +3155,7 @@ name = "pygments"
 version = "2.19.2"
 requires_python = ">=3.8"
 summary = "Pygments is a syntax highlighting package written in Python."
-groups = ["dev-all", "dev-docs", "dev-security", "dev-tests", "dev-typing"]
+groups = ["default", "dev-all", "dev-docs", "dev-security", "dev-tests", "dev-typing"]
 files = [
     {file = "pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b"},
     {file = "pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887"},
@@ -3252,7 +3294,7 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "8.4.1"
+version = "8.4.2"
 requires_python = ">=3.9"
 summary = "pytest: simple powerful testing with Python"
 groups = ["dev-all", "dev-tests", "dev-typing"]
@@ -3266,8 +3308,8 @@ dependencies = [
     "tomli>=1; python_version < \"3.11\"",
 ]
 files = [
-    {file = "pytest-8.4.1-py3-none-any.whl", hash = "sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7"},
-    {file = "pytest-8.4.1.tar.gz", hash = "sha256:7c67fd69174877359ed9371ec3af8a3d2b04741818c51e5e99cc1742251fa93c"},
+    {file = "pytest-8.4.2-py3-none-any.whl", hash = "sha256:872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79"},
+    {file = "pytest-8.4.2.tar.gz", hash = "sha256:86c0d0b93306b961d58d62a4db4879f27fe25513d4b969df351abdddb3c30e01"},
 ]
 
 [[package]]
@@ -3614,7 +3656,7 @@ files = [
 
 [[package]]
 name = "reuse"
-version = "5.0.2"
+version = "5.1.1"
 requires_python = "<4.0,>=3.9"
 summary = "reuse is a tool for compliance with the REUSE recommendations."
 groups = ["dev-all", "dev-legal", "dev-release"]
@@ -3629,8 +3671,8 @@ dependencies = [
     "tomlkit>=0.8",
 ]
 files = [
-    {file = "reuse-5.0.2-cp313-cp313-manylinux_2_40_x86_64.whl", hash = "sha256:7a680f00324e87a72061677a892d8cbabfddf7adcf7a5376aeeed2d78995bbbb"},
-    {file = "reuse-5.0.2.tar.gz", hash = "sha256:878016ae5dd29c10bad4606d6676c12a268c12aa9fcfea66403598e16eed085c"},
+    {file = "reuse-5.1.1-cp313-cp313-manylinux_2_41_x86_64.whl", hash = "sha256:15a68341949b7ddb3630d8d3a49d9537bbc143ee235dca77cc3f4047237c8299"},
+    {file = "reuse-5.1.1.tar.gz", hash = "sha256:a13914ed8b66b8e5956e96c63203c63d72b55280d348849ccc0eb314c73248cb"},
 ]
 
 [[package]]
@@ -3677,8 +3719,7 @@ name = "rich"
 version = "13.5.3"
 requires_python = ">=3.7.0"
 summary = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
-groups = ["dev-all", "dev-security"]
-marker = "platform_system != \"Windows\" and python_version == \"3.11\""
+groups = ["default", "dev-all", "dev-security"]
 dependencies = [
     "markdown-it-py>=2.2.0",
     "pygments<3.0.0,>=2.13.0",
@@ -3853,30 +3894,30 @@ files = [
 
 [[package]]
 name = "ruff"
-version = "0.12.11"
+version = "0.12.12"
 requires_python = ">=3.7"
 summary = "An extremely fast Python linter and code formatter, written in Rust."
 groups = ["dev-all", "dev-python"]
 files = [
-    {file = "ruff-0.12.11-py3-none-linux_armv6l.whl", hash = "sha256:93fce71e1cac3a8bf9200e63a38ac5c078f3b6baebffb74ba5274fb2ab276065"},
-    {file = "ruff-0.12.11-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:b8e33ac7b28c772440afa80cebb972ffd823621ded90404f29e5ab6d1e2d4b93"},
-    {file = "ruff-0.12.11-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d69fb9d4937aa19adb2e9f058bc4fbfe986c2040acb1a4a9747734834eaa0bfd"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:411954eca8464595077a93e580e2918d0a01a19317af0a72132283e28ae21bee"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:6a2c0a2e1a450f387bf2c6237c727dd22191ae8c00e448e0672d624b2bbd7fb0"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:8ca4c3a7f937725fd2413c0e884b5248a19369ab9bdd850b5781348ba283f644"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:4d1df0098124006f6a66ecf3581a7f7e754c4df7644b2e6704cd7ca80ff95211"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:5a8dd5f230efc99a24ace3b77e3555d3fbc0343aeed3fc84c8d89e75ab2ff793"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:4dc75533039d0ed04cd33fb8ca9ac9620b99672fe7ff1533b6402206901c34ee"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4fc58f9266d62c6eccc75261a665f26b4ef64840887fc6cbc552ce5b29f96cc8"},
-    {file = "ruff-0.12.11-py3-none-manylinux_2_31_riscv64.whl", hash = "sha256:5a0113bd6eafd545146440225fe60b4e9489f59eb5f5f107acd715ba5f0b3d2f"},
-    {file = "ruff-0.12.11-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:0d737b4059d66295c3ea5720e6efc152623bb83fde5444209b69cd33a53e2000"},
-    {file = "ruff-0.12.11-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:916fc5defee32dbc1fc1650b576a8fed68f5e8256e2180d4d9855aea43d6aab2"},
-    {file = "ruff-0.12.11-py3-none-musllinux_1_2_i686.whl", hash = "sha256:c984f07d7adb42d3ded5be894fb4007f30f82c87559438b4879fe7aa08c62b39"},
-    {file = "ruff-0.12.11-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:e07fbb89f2e9249f219d88331c833860489b49cdf4b032b8e4432e9b13e8a4b9"},
-    {file = "ruff-0.12.11-py3-none-win32.whl", hash = "sha256:c792e8f597c9c756e9bcd4d87cf407a00b60af77078c96f7b6366ea2ce9ba9d3"},
-    {file = "ruff-0.12.11-py3-none-win_amd64.whl", hash = "sha256:a3283325960307915b6deb3576b96919ee89432ebd9c48771ca12ee8afe4a0fd"},
-    {file = "ruff-0.12.11-py3-none-win_arm64.whl", hash = "sha256:bae4d6e6a2676f8fb0f98b74594a048bae1b944aab17e9f5d504062303c6dbea"},
-    {file = "ruff-0.12.11.tar.gz", hash = "sha256:c6b09ae8426a65bbee5425b9d0b82796dbb07cb1af045743c79bfb163001165d"},
+    {file = "ruff-0.12.12-py3-none-linux_armv6l.whl", hash = "sha256:de1c4b916d98ab289818e55ce481e2cacfaad7710b01d1f990c497edf217dafc"},
+    {file = "ruff-0.12.12-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:7acd6045e87fac75a0b0cdedacf9ab3e1ad9d929d149785903cff9bb69ad9727"},
+    {file = "ruff-0.12.12-py3-none-macosx_11_0_arm64.whl", hash = "sha256:abf4073688d7d6da16611f2f126be86523a8ec4343d15d276c614bda8ec44edb"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:968e77094b1d7a576992ac078557d1439df678a34c6fe02fd979f973af167577"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:42a67d16e5b1ffc6d21c5f67851e0e769517fb57a8ebad1d0781b30888aa704e"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:b216ec0a0674e4b1214dcc998a5088e54eaf39417327b19ffefba1c4a1e4971e"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:59f909c0fdd8f1dcdbfed0b9569b8bf428cf144bec87d9de298dcd4723f5bee8"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:9ac93d87047e765336f0c18eacad51dad0c1c33c9df7484c40f98e1d773876f5"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:01543c137fd3650d322922e8b14cc133b8ea734617c4891c5a9fccf4bfc9aa92"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2afc2fa864197634e549d87fb1e7b6feb01df0a80fd510d6489e1ce8c0b1cc45"},
+    {file = "ruff-0.12.12-py3-none-manylinux_2_31_riscv64.whl", hash = "sha256:0c0945246f5ad776cb8925e36af2438e66188d2b57d9cf2eed2c382c58b371e5"},
+    {file = "ruff-0.12.12-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:a0fbafe8c58e37aae28b84a80ba1817f2ea552e9450156018a478bf1fa80f4e4"},
+    {file = "ruff-0.12.12-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:b9c456fb2fc8e1282affa932c9e40f5ec31ec9cbb66751a316bd131273b57c23"},
+    {file = "ruff-0.12.12-py3-none-musllinux_1_2_i686.whl", hash = "sha256:5f12856123b0ad0147d90b3961f5c90e7427f9acd4b40050705499c98983f489"},
+    {file = "ruff-0.12.12-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:26a1b5a2bf7dd2c47e3b46d077cd9c0fc3b93e6c6cc9ed750bd312ae9dc302ee"},
+    {file = "ruff-0.12.12-py3-none-win32.whl", hash = "sha256:173be2bfc142af07a01e3a759aba6f7791aa47acf3604f610b1c36db888df7b1"},
+    {file = "ruff-0.12.12-py3-none-win_amd64.whl", hash = "sha256:e99620bf01884e5f38611934c09dd194eb665b0109104acae3ba6102b600fd0d"},
+    {file = "ruff-0.12.12-py3-none-win_arm64.whl", hash = "sha256:2a8199cab4ce4d72d158319b63370abf60991495fb733db96cd923a34c52d093"},
+    {file = "ruff-0.12.12.tar.gz", hash = "sha256:b86cd3415dbe31b3b46a71c598f4c4b2f550346d1ccf6326b347cc0c8fd063d6"},
 ]
 
 [[package]]
@@ -3892,7 +3933,7 @@ files = [
 
 [[package]]
 name = "semgrep"
-version = "1.134.0"
+version = "1.135.0"
 requires_python = ">=3.9"
 summary = "Lightweight static analysis for many languages. Find bug variants with patterns that look like source code."
 groups = ["dev-all", "dev-security"]
@@ -3922,12 +3963,12 @@ dependencies = [
     "wcmatch~=8.3",
 ]
 files = [
-    {file = "semgrep-1.134.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:6aeccc5d63519c55126a31dfdc74704c889d505c16eac6d672fa3365718a9ea6"},
-    {file = "semgrep-1.134.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:2eff8b9b694536d7a310b9e9a8881ba919352d49bf7802d2f9b6f93c2fa9080e"},
-    {file = "semgrep-1.134.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7b3dee850bb123ab2b30af24096cc6f4cb4ed4b360a0076d2c0b4af6c95c3114"},
-    {file = "semgrep-1.134.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:009e798c5b872ae1f8129d8a069be65e62ab54fdc01d12a6c795ab33c271b18c"},
-    {file = "semgrep-1.134.0-cp39.cp310.cp311.py39.py310.py311-none-win_amd64.whl", hash = "sha256:c6b0aa5f74bbb2f0b4174fbbe89d8443720d71ee25349afcd685cd02419e9b66"},
-    {file = "semgrep-1.134.0.tar.gz", hash = "sha256:06a2401187a044ab6cd59120617b06a84fa0158b4192618539b516cc92dd00b5"},
+    {file = "semgrep-1.135.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_10_14_x86_64.whl", hash = "sha256:4a146201231a638162113c487976825a799203a576f7e60389591fb2586dcbf7"},
+    {file = "semgrep-1.135.0-cp39.cp310.cp311.py39.py310.py311-none-macosx_11_0_arm64.whl", hash = "sha256:f78d32e27e62677a3009518b5055cbcbeff3b433a97398ea502d0a81346916c9"},
+    {file = "semgrep-1.135.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_aarch64.manylinux2014_aarch64.whl", hash = "sha256:14801147beb0006becbf1573277cf3e7500cf179e49a8cf5a3a88058a9a0e152"},
+    {file = "semgrep-1.135.0-cp39.cp310.cp311.py39.py310.py311-none-musllinux_1_0_x86_64.manylinux2014_x86_64.whl", hash = "sha256:643c40f443b0d8a99de5153a7d55276f002e6abc16eedc8e33a940637c89fe31"},
+    {file = "semgrep-1.135.0-cp39.cp310.cp311.py39.py310.py311-none-win_amd64.whl", hash = "sha256:832caa9747b5d1fcec446fbdd5e0ad3f8b7555acd6faea9caaa91f3ad76473f9"},
+    {file = "semgrep-1.135.0.tar.gz", hash = "sha256:ec2c5f870112ec7b0e5c8f8c3e3ec66d5557d56e1080ffcbc0cbb6ec491ea841"},
 ]
 
 [[package]]
@@ -4333,8 +4374,7 @@ name = "wrapt"
 version = "1.17.3"
 requires_python = ">=3.8"
 summary = "Module for decorators, wrappers and monkey patching."
-groups = ["dev-all", "dev-security"]
-marker = "platform_system != \"Windows\" and python_version == \"3.11\""
+groups = ["default", "dev-all", "dev-security"]
 files = [
     {file = "wrapt-1.17.3-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:273a736c4645e63ac582c60a56b0acb529ef07f78e08dc6bfadf6a46b19c0da7"},
     {file = "wrapt-1.17.3-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:5531d911795e3f935a9c23eb1c8c03c211661a5060aab167065896bbf62a5f85"},
@@ -4392,13 +4432,13 @@ files = [
 
 [[package]]
 name = "xmltodict"
-version = "0.14.2"
+version = "0.15.0"
 requires_python = ">=3.6"
 summary = "Makes working with XML feel like you are working with JSON"
 groups = ["dev-all", "dev-release"]
 files = [
-    {file = "xmltodict-0.14.2-py2.py3-none-any.whl", hash = "sha256:20cc7d723ed729276e808f26fb6b3599f786cbc37e06c65e192ba77c40f20aac"},
-    {file = "xmltodict-0.14.2.tar.gz", hash = "sha256:201e7c28bb210e374999d1dde6382923ab0ed1a8a5faeece48ab525b7810a553"},
+    {file = "xmltodict-0.15.0-py2.py3-none-any.whl", hash = "sha256:8887783bf1faba1754fc45fdf3fe03fbb3629c811ae57f91c018aace4c58d4ed"},
+    {file = "xmltodict-0.15.0.tar.gz", hash = "sha256:c6d46b4e3413d1e4fc3e5016f0f1c7a5c10f8ce39efaa0cb099af986ecfc9a53"},
 ]
 
 [[package]]
