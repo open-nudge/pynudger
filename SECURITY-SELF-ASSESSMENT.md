@@ -60,7 +60,7 @@ opennudge Python linter (naming conventions and other automated checks)
 
 ### Background
 
-TBD
+Python opinionated style linter __not providing any security features__.
 
 ### Actors
 
@@ -74,11 +74,13 @@ TBD
 
 ### Goals
 
-TBD
+Python opinionated style linter __not providing any security features__.
 
 ### Non-goals
 
-TBD
+- Being comprehensive end-to-end linting solution
+    (akin to [ruff](https://github.com/astral-sh/ruff))
+- Providing rules for other languages than Python
 
 ## Self-assessment use
 
@@ -148,7 +150,10 @@ file.
 
 ### Incident response
 
-TBD
+If you discover a security vulnerability within
+[`open-nudge/pynudger`](https://github.com/open-nudge/pynudger)
+please report it as outlined in the
+[`SECURITY.md`](SECURITY.md) file or contact security@opennudge.com.
 
 ## Appendix
 
