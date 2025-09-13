@@ -48,13 +48,25 @@ ______________________________________________________________________
 
 ## Features
 
-__pynudger__ is a … allowing you to:
+__pynudger__ is an opinionated linter for Python projects, focused on
+naming conventions and making your code "more Pythonic".
 
-- __Feature 1__: Description of the feature
-- __Feature 2__: Description of the feature
-- __Feature 3__: Description of the feature
-- __Feature 4__: Description of the feature
-- __Feature 5__: Description of the feature
+- __Length rules__: Too long class/function names are flagged.
+- __Setters/getters__: Discourages usage of setters/getters,
+    encourages properties instead.
+- __No helpers/utils/commons__: Incentivizes more descriptive
+    and semantically coherent names for functionalities.
+
+## Table of contents
+
+- [Quick start](#quick-start)
+    - [Installation](#installation)
+    - [Usage](#usage)
+- [Advanced](#advanced)
+    - [Configuration](#configuration)
+    - [Run as a pre-commit hook](#run-as-a-pre-commit-hook)
+    - [Disable in code](#disable-in-code)
+    - [Rules](#rules)
 
 ## Quick start
 
@@ -73,55 +85,137 @@ __pynudger__ is a … allowing you to:
 
 ### Usage
 
-```python
-import pynudger
+To check against the rules run the following from the command line:
 
-...
+```sh
+> pynudger check
 ```
 
-### Examples
+You can pass additional arguments to `pynudger check`, like files
+to check (by default all Python files in the current directory):
 
-<details>
-  <summary><b><big>Short</big></b> (click me)</summary>
-&nbsp;
-
-Description of the example
-
-```python
-# Short example
+```sh
+> pynudger check path/to/file.py another_file.py
 ```
 
-</details>
+## Advanced
 
-<details>
-  <summary><b><big>Common</big></b> (click me)</summary>
-&nbsp;
+### Configuration
 
-Description of the example
+You can configure pynudger in `pyproject.toml` (or `.pynudger.toml`
+in the root of your project, just remove the `[tool.pynudger]` section),
+for example:
 
-```python
-# Common use case
+```toml
+[tool.pynudger]
+# include rules by their code
+include_codes = [1, 2, 5] # default: all rules included
+# exclude rules by their code (takes precedence over include)
+exclude_codes = [4, 5, 6] # default: no rules excluded
+# whether to exit after first error or all errors
+end_mode = "first" # default: "all"
 ```
 
-</details>
+> [!TIP]
+> Rule-specific configuration can be found in the section below.
 
-<details>
-  <summary><b><big>Advanced</big></b> (click me)</summary>
-&nbsp;
+### Run as a pre-commit hook
 
-Description of the example
+`pynudger` can be used as a pre-commit hook, to add as a plugin:
 
-```python
-# Something advanced and cool
+```yaml
+repos:
+-   repo: "https://github.com/open-nudge/pynudger"
+    rev: ...  # select the tag or revision you want, or run `pre-commit autoupdate`
+    hooks:
+    -   id: "pynudger"
 ```
 
-</details>
+### Disable in code
+
+You can disable `pynudger` on a line-by-line basis
+(you have to specify exact code), e.g.:
+
+```python
+def set_my_too_long_function_name():  # noqa: PYNUDGER0, PYNUDGER16
+    pass
+```
+
+or a line span:
+
+```python
+# noqa-start: PYNUDGER0, PYNUDGER16
+def set_my_too_long_function_name():
+    pass
+
+def set_another_long_function():
+    pass
+# noqa-end: PYNUDGER0, PYNUDGER16
+
+def set_will_error_out_this_time():
+    pass
+```
+
+It is also possible to disable all checks in a file
+by placing the following somewhere in the file (preferably at the top):
+
+```python
+# noqa-file: PYNUDGER0, PYNUDGER16
+```
+
+> [!NOTE]
+> If you are running `pynudger` with
+> [`ruff`](https://github.com/astral-sh/ruff) you should add
+> `lint.external = ["PYNUDGER"]` to `[tool.ruff]` section in
+> `pyproject.toml` to avoid removing `# noqa: PYNUDGER` comments.
+
+### Rules
+
+> [!TIP]
+> Run `pynudger rules` to see the list of available rules.
+
+`pynudger` provides the following rules:
+
+<!-- pyml disable-num-lines 25 line-length-->
+
+| Name         | Description                                                               |
+| ------------ | ------------------------------------------------------------------------- |
+| `PYNUDGER0`  | Avoid using setters in class names. Use properties instead.               |
+| `PYNUDGER1`  | Avoid using setters in function names. Use properties instead.            |
+| `PYNUDGER2`  | Avoid using setters in file names. Define file name without it.           |
+| `PYNUDGER3`  | Avoid using getters in class names. Use properties instead.               |
+| `PYNUDGER4`  | Avoid using getters in function names. Use properties instead.            |
+| `PYNUDGER5`  | Avoid using getters in file names. Define file name without it.           |
+| `PYNUDGER6`  | Avoid using utils in class names. Name the class appropriately.           |
+| `PYNUDGER7`  | Avoid using utils in function names. Name the function appropriately.     |
+| `PYNUDGER8`  | Avoid defining utils modules. Move functionality to appropriate modules.  |
+| `PYNUDGER9`  | Avoid using helpers in class names. Name the class appropriately.         |
+| `PYNUDGER10` | Avoid using helpers in function names. Name the function appropriately.   |
+| `PYNUDGER11` | Avoid defining utils modules. Move functionality to appropriate modules.  |
+| `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.          |
+| `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.    |
+| `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules. |
+| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.       |
+| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.    |
+| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.        |
+
+with the following configurable options (in `pyproject.toml`
+or `.pynudger.toml`):
+
+<!-- pyml disable-num-lines 10 line-length-->
+
+| Option            | Description                                           | Affected rules         | Default |
+| ----------------- | ----------------------------------------------------- | ---------------------- | ------- |
+| `pascal_length`   | Maximum allowed length of PascalCase names            | PYNUDGER15             | 3       |
+| `snake_length`    | Maximum allowed length of snake_case names            | PYNUDGER16, PYNUDGER17 | 3       |
+| `pascal_excludes` | List of words to exclude from PascalCase length check | PYNUDGER15             | []      |
+| `snake_excludes`  | List of words to exclude from snake_case length check | PYNUDGER16, PYNUDGER17 | []      |
+
+## Contribute
 
 <!-- md-dead-link-check: off -->
 
 <!-- mkdocs remove start -->
-
-## Contribute
 
 We welcome your contributions! Start here:
 

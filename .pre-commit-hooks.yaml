@@ -3,12 +3,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Pynudger is an official opennudge linter."""
-
-from __future__ import annotations
-
-from importlib.metadata import version
-
-__version__ = version("pynudger")
-
-del version
+---
+- id: "pynudger"
+  name: "pynudger"
+  description: "Opinionated Python linter from opennudge"
+  language: "python"
+  entry: "pynudger"
+  types:
+    - "python"
+...

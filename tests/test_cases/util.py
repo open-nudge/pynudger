@@ -3,12 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Pynudger is an official opennudge linter."""
+"""Module containing dummy utils."""
 
 from __future__ import annotations
 
-from importlib.metadata import version
 
-__version__ = version("pynudger")
+class UtilClass:
+    """Dummy util class."""
 
-del version
+
+def util_function() -> None:
+    """Dummy util function."""
