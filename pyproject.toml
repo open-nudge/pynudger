@@ -81,6 +81,9 @@ urls.Homepage = "https://open-nudge.github.io/pynudger"
 urls.Issues = "https://github.com/open-nudge/pynudger/issues"
 urls.Repository = "https://github.com/open-nudge/pynudger"
 
+[project.scripts]
+pynudger = "pynudger._cli:main"
+
 [dependency-groups]
 dev-tests = [
   # Fuzz/property testing for Python
