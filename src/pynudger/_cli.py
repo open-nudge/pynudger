@@ -28,6 +28,21 @@ from pynudger import (  # noqa: E402
 )
 
 
+def _files_default() -> Iterable[pathlib.Path]:
+    """Default files to lint.
+
+    Returns:
+        All Python files in the current working directory and its
+        subdirectories, excluding some well-known directories like
+        `__pypackages__`.
+
+    """
+    ignore = {"__pypackages__", ".venv", ".git", "__pycache__"}
+    for p in pathlib.Path.cwd().rglob("*.py"):
+        if ignore.isdisjoint(p.parts):
+            yield p
+
+
 def main(
     args: list[str] | None = None,
     include_codes: Iterable[int] | None = None,
@@ -45,7 +60,7 @@ def main(
 
     lintkit.cli.main(
         version(NAME),
-        files_default=pathlib.Path.cwd().rglob("*.py"),
+        files_default=_files_default(),
         files_help=(
             "Files to lint with pynudger (default: all Python files in cwd)"
         ),

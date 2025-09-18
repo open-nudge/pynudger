@@ -20,6 +20,7 @@ from pynudger import _cli
     "command",
     (
         ["rules"],
+        ["check"],
         [
             "check",
             "./tests/test_cases/common.py",
