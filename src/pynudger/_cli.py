@@ -59,7 +59,7 @@ def main(
         exclude_codes = config.get("exclude_codes")
 
     lintkit.cli.main(
-        version(NAME),
+        version=version(NAME),
         files_default=_files_default(),
         files_help=(
             "Files to lint with pynudger (default: all Python files in cwd)"
