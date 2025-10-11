@@ -9,6 +9,8 @@
   description: "Opinionated Python linter from opennudge"
   language: "python"
   entry: "pynudger"
+  args:
+    - "check"
   types:
     - "python"
 ...
