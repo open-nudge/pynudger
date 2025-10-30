@@ -204,12 +204,13 @@ or `.pynudger.toml`):
 
 <!-- pyml disable-num-lines 10 line-length-->
 
-| Option            | Description                                           | Affected rules         | Default |
-| ----------------- | ----------------------------------------------------- | ---------------------- | ------- |
-| `pascal_length`   | Maximum allowed length of PascalCase names            | PYNUDGER15             | 3       |
-| `snake_length`    | Maximum allowed length of snake_case names            | PYNUDGER16, PYNUDGER17 | 3       |
-| `pascal_excludes` | List of words to exclude from PascalCase length check | PYNUDGER15             | []      |
-| `snake_excludes`  | List of words to exclude from snake_case length check | PYNUDGER16, PYNUDGER17 | []      |
+| Option            | Description                                                           | Affected rules         | Default                                                    |
+| ----------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `pascal_length`   | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
+| `snake_length`    | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
+| `pascal_excludes` | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
+| `snake_excludes`  | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
+| `dir_ignores`     | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
 
 ## Contribute
 
