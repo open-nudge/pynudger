@@ -210,7 +210,8 @@ or `.pynudger.toml`):
 | `snake_length`    | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
 | `pascal_excludes` | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
 | `snake_excludes`  | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
-| `dir_ignores`     | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
+| `dir_ignores`         | List of (sub)directories to be excluded in case no files are provided         | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
+| `extend_dir_ignores`  | Additional (sub)directories to ignore, extending the default ignores          | __ALL__                | []                                                         |
 
 ## Contribute
 
