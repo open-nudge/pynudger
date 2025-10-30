@@ -28,7 +28,7 @@ from pynudger import (  # noqa: E402
 )
 
 
-def _files_default() -> Iterable[pathlib.Path]:
+def _files_default(config: dict[str, typing.Any]) -> Iterable[pathlib.Path]:
     """Default files to lint.
 
     Returns:
@@ -37,9 +37,14 @@ def _files_default() -> Iterable[pathlib.Path]:
         `__pypackages__`.
 
     """
-    ignore = {"__pypackages__", ".venv", ".git", "__pycache__"}
+    ignores = set(
+        config.get(
+            "dir_ignores", ["__pypackages__", ".venv", ".git", "__pycache__"]
+        )
+    ) | set(config.get("extend_dir_ignores", []))
+
     for p in pathlib.Path.cwd().rglob("*.py"):
-        if ignore.isdisjoint(p.parts):
+        if ignores.isdisjoint(p.parts):
             yield p
 
 
@@ -60,7 +65,7 @@ def main(
 
     lintkit.cli.main(
         version=version(NAME),
-        files_default=_files_default(),
+        files_default=_files_default(config),
         files_help=(
             "Files to lint with pynudger (default: all Python files in cwd)"
         ),
