@@ -981,6 +981,8 @@ check-toml = "check-toml"
 check-security = { cmd = [
   "semgrep",
   "scan",
+  "--experimental",
+  "--exclude=*pdm.lock",
   "--config=p/python",
   "--config=p/secrets",
   "--config=p/security-audit",
