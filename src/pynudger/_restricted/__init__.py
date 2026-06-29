@@ -3,14 +3,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy commons."""
+"""Restricted rule implementation package."""
 
 from __future__ import annotations
-
-
-class CommonClass:
-    """Dummy common class."""
-
-
-def common_function() -> None:
-    """Dummy setter function."""
