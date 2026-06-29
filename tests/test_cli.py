@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import pathlib
 import typing
 
 import lintkit
@@ -46,6 +47,9 @@ def test_cli(
             Pytest system capture fixture (used for stdout/stderr analysis).
 
     """
+    if command[0] == "check" and len(command) > 1:
+        command = [*command, str(_restricted_path())]
+
     try:
         _cli.main(args=command)
     except SystemExit as e:
@@ -55,3 +59,13 @@ def test_cli(
                 assert f"PYNUDGER{i}" in out
         else:
             assert e.code == 0  # noqa: PT017
+
+
+def _restricted_path() -> pathlib.Path:
+    """Return the restricted runtime construct fixture path.
+
+    Returns:
+        Resolved restricted runtime construct fixture path.
+
+    """
+    return pathlib.Path("tests/test_cases/restricted.py").resolve()

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -22,10 +22,9 @@ NAME = "pynudger"
 
 lintkit.settings.name = NAME.upper()
 
-# Import all rules to register them (side-effect)
-from pynudger import (  # noqa: E402
-    _rule,  # noqa: F401  # pyright: ignore[reportUnusedImport]
-)
+# Import all rule modules to register lintkit rules (side effect).
+from pynudger import _rule as _rule  # noqa: E402, PLC0414
+from pynudger._restricted import rule as rule  # noqa: E402, PLC0414
 
 
 def _files_default(config: dict[str, typing.Any]) -> Iterable[pathlib.Path]:

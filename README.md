@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 SPDX-FileContributor: szymonmaszke <github@maszke.co>
 
 SPDX-License-Identifier: Apache-2.0
@@ -176,42 +176,51 @@ by placing the following somewhere in the file (preferably at the top):
 
 `pynudger` provides the following rules:
 
-<!-- pyml disable-num-lines 25 line-length-->
+<!-- pyml disable-num-lines 35 line-length-->
 
-| Name         | Description                                                               |
-| ------------ | ------------------------------------------------------------------------- |
-| `PYNUDGER0`  | Avoid using setters in class names. Use properties instead.               |
-| `PYNUDGER1`  | Avoid using setters in function names. Use properties instead.            |
-| `PYNUDGER2`  | Avoid using setters in file names. Define file name without it.           |
-| `PYNUDGER3`  | Avoid using getters in class names. Use properties instead.               |
-| `PYNUDGER4`  | Avoid using getters in function names. Use properties instead.            |
-| `PYNUDGER5`  | Avoid using getters in file names. Define file name without it.           |
-| `PYNUDGER6`  | Avoid using utils in class names. Name the class appropriately.           |
-| `PYNUDGER7`  | Avoid using utils in function names. Name the function appropriately.     |
-| `PYNUDGER8`  | Avoid defining utils modules. Move functionality to appropriate modules.  |
-| `PYNUDGER9`  | Avoid using helpers in class names. Name the class appropriately.         |
-| `PYNUDGER10` | Avoid using helpers in function names. Name the function appropriately.   |
-| `PYNUDGER11` | Avoid defining utils modules. Move functionality to appropriate modules.  |
-| `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.          |
-| `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.    |
-| `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules. |
-| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.       |
-| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.    |
-| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.        |
+| Name         | Description                                                                                                        |
+| ------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `PYNUDGER0`  | Avoid using setters in class names. Use properties instead.                                                        |
+| `PYNUDGER1`  | Avoid using setters in function names. Use properties instead.                                                     |
+| `PYNUDGER2`  | Avoid using setters in file names. Define file name without it.                                                    |
+| `PYNUDGER3`  | Avoid using getters in class names. Use properties instead.                                                        |
+| `PYNUDGER4`  | Avoid using getters in function names. Use properties instead.                                                     |
+| `PYNUDGER5`  | Avoid using getters in file names. Define file name without it.                                                    |
+| `PYNUDGER6`  | Avoid using utils in class names. Name the class appropriately.                                                    |
+| `PYNUDGER7`  | Avoid using utils in function names. Name the function appropriately.                                              |
+| `PYNUDGER8`  | Avoid defining utils modules. Move functionality to appropriate modules.                                           |
+| `PYNUDGER9`  | Avoid using helpers in class names. Name the class appropriately.                                                  |
+| `PYNUDGER10` | Avoid using helpers in function names. Name the function appropriately.                                            |
+| `PYNUDGER11` | Avoid defining utils modules. Move functionality to appropriate modules.                                           |
+| `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.                                                   |
+| `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.                                             |
+| `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules.                                          |
+| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.                                                |
+| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.                                             |
+| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.                                                 |
+| `PYNUDGER18` | Avoid restricted state management keywords: del, global, nonlocal, pass.                                           |
+| `PYNUDGER19` | Avoid restricted iteration keywords: break, continue.                                                              |
+| `PYNUDGER20` | Avoid restricted compatibility functionality: object, basestring, unicode, long.                                   |
+| `PYNUDGER21` | Avoid restricted utility/interactive functions: breakpoint, help, id.                                              |
+| `PYNUDGER22` | Avoid restricted explicit casting functionality: typing.cast, bool, float, int, str.                               |
+| `PYNUDGER23` | Avoid restricted insecure builtin functions: exec, eval, compile.                                                  |
+| `PYNUDGER24` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                                     |
+| `PYNUDGER25` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir, property. |
+| `PYNUDGER26` | Avoid restricted explicit dunder access: attributes starting with `__`.                                            |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
 <!-- pyml disable-num-lines 10 line-length-->
 
-| Option            | Description                                                           | Affected rules         | Default                                                    |
-| ----------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
-| `pascal_length`   | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
-| `snake_length`    | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
-| `pascal_excludes` | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
-| `snake_excludes`  | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
-| `dir_ignores`         | List of (sub)directories to be excluded in case no files are provided         | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
-| `extend_dir_ignores`  | Additional (sub)directories to ignore, extending the default ignores          | __ALL__                | []                                                         |
+| Option               | Description                                                           | Affected rules         | Default                                                    |
+| -------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `pascal_length`      | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
+| `snake_length`       | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
+| `pascal_excludes`    | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
+| `snake_excludes`     | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
+| `dir_ignores`        | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
+| `extend_dir_ignores` | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 
 ## Contribute
 
