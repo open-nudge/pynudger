@@ -71,10 +71,7 @@ class _Length(lintkit.check.Check, abc.ABC):
             Length limit
 
         """
-        length = self.config.get(f"{self._variable()}_length")  # pyright: ignore[reportAttributeAccessIssue]
-        if length is None:
-            return 3
-        return length  # pragma: no cover
+        return self.config.get(f"{self._variable()}_length", 3)  # pyright: ignore[reportAttributeAccessIssue]
 
     def message(self, value: lintkit.Value[str]) -> str:
         """Display error message in case of rule violation.

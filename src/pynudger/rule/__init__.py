@@ -22,6 +22,7 @@ from pynudger.rule import (
     length,
     setter,
     string,
+    testing,
     util,
 )
 
@@ -35,5 +36,6 @@ __all__ = [
     "length",
     "setter",
     "string",
+    "testing",
     "util",
 ]
