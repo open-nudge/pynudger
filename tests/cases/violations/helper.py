@@ -3,14 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy commons."""
+"""Testing helper rule violations."""
 
 from __future__ import annotations
 
 
-class CommonClass:
-    """Dummy common class."""
+class HelperClass:
+    """Dummy helper class."""
 
 
-def common_function() -> None:
-    """Dummy setter function."""
+def helper_function() -> None:
+    """Dummy helper function."""

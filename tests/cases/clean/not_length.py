@@ -3,14 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy getters."""
+"""Test for no accidental length violations."""
 
 from __future__ import annotations
 
 
-class GetterClass:
-    """Dummy getter class."""
+class Short:
+    """Dummy short class."""
 
 
-def getter_function() -> None:
-    """Dummy getter function."""
+def short() -> None:
+    """Dummy short function."""

@@ -3,14 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy setters."""
+"""Tests for length violations."""
 
 from __future__ import annotations
 
 
-class VeryLongClassNameThatExceedsNormalLengthExpectations:
+class TooLongClassNameThatExceedsNormalLengthExpectations:
     """Dummy loooong class."""
 
 
 def long_function_with_an_excessively_long_name_to_test_error() -> None:
-    """Dummy setter function."""
+    """Dummy loooong function."""

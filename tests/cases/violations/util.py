@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy utils."""
+"""Testing utils rule violations."""
 
 from __future__ import annotations
 

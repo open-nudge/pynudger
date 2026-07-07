@@ -3,14 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Module containing dummy helpers."""
+"""Testing setters rule violations."""
 
 from __future__ import annotations
 
 
-class HelperClass:
-    """Dummy helper class."""
+class SetterClass:
+    """Dummy setter class."""
 
 
-def helper_function() -> None:
-    """Dummy helper function."""
+def setter_function() -> None:
+    """Dummy setter function."""

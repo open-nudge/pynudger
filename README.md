@@ -178,35 +178,36 @@ by placing the following somewhere in the file (preferably at the top):
 
 <!-- pyml disable-num-lines 35 line-length-->
 
-| Name         | Description                                                                                                        |
-| ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `PYNUDGER0`  | Avoid using setters in class names. Use properties instead.                                                        |
-| `PYNUDGER1`  | Avoid using setters in function names. Use properties instead.                                                     |
-| `PYNUDGER2`  | Avoid using setters in file names. Define file name without it.                                                    |
-| `PYNUDGER3`  | Avoid using getters in class names. Use properties instead.                                                        |
-| `PYNUDGER4`  | Avoid using getters in function names. Use properties instead.                                                     |
-| `PYNUDGER5`  | Avoid using getters in file names. Define file name without it.                                                    |
-| `PYNUDGER6`  | Avoid using utils in class names. Name the class appropriately.                                                    |
-| `PYNUDGER7`  | Avoid using utils in function names. Name the function appropriately.                                              |
-| `PYNUDGER8`  | Avoid defining utils modules. Move functionality to appropriate modules.                                           |
-| `PYNUDGER9`  | Avoid using helpers in class names. Name the class appropriately.                                                  |
-| `PYNUDGER10` | Avoid using helpers in function names. Name the function appropriately.                                            |
-| `PYNUDGER11` | Avoid defining utils modules. Move functionality to appropriate modules.                                           |
-| `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.                                                   |
-| `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.                                             |
-| `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules.                                          |
-| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.                                                |
-| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.                                             |
-| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.                                                 |
-| `PYNUDGER18` | Avoid restricted state management keywords: del, global, nonlocal, pass.                                           |
-| `PYNUDGER19` | Avoid restricted iteration keywords: break, continue.                                                              |
-| `PYNUDGER20` | Avoid restricted compatibility functionality: object, basestring, unicode, long.                                   |
-| `PYNUDGER21` | Avoid restricted utility/interactive functions: breakpoint, help, id.                                              |
-| `PYNUDGER22` | Avoid restricted explicit casting functionality: typing.cast, bool, float, int, str.                               |
-| `PYNUDGER23` | Avoid restricted insecure builtin functions: exec, eval, compile.                                                  |
-| `PYNUDGER24` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                                     |
-| `PYNUDGER25` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir, property. |
-| `PYNUDGER26` | Avoid restricted explicit dunder access: attributes starting with `__`.                                            |
+| Name         | Description                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------- |
+| `PYNUDGER0`  | Avoid using setters in class names. Use properties instead.                                              |
+| `PYNUDGER1`  | Avoid using setters in function names. Use properties instead.                                           |
+| `PYNUDGER2`  | Avoid using setters in file names. Define file name without it.                                          |
+| `PYNUDGER3`  | Avoid using getters in class names. Use properties instead.                                              |
+| `PYNUDGER4`  | Avoid using getters in function names. Use properties instead.                                           |
+| `PYNUDGER5`  | Avoid using getters in file names. Define file name without it.                                          |
+| `PYNUDGER6`  | Avoid using utils in class names. Name the class appropriately.                                          |
+| `PYNUDGER7`  | Avoid using utils in function names. Name the function appropriately.                                    |
+| `PYNUDGER8`  | Avoid defining utils modules. Move functionality to appropriate modules.                                 |
+| `PYNUDGER9`  | Avoid using helpers in class names. Name the class appropriately.                                        |
+| `PYNUDGER10` | Avoid using helpers in function names. Name the function appropriately.                                  |
+| `PYNUDGER11` | Avoid defining utils modules. Move functionality to appropriate modules.                                 |
+| `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.                                         |
+| `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.                                   |
+| `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules.                                |
+| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.                                      |
+| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.                                   |
+| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.                                       |
+| `PYNUDGER18` | Avoid restricted state management keywords: del, global, nonlocal.                                       |
+| `PYNUDGER19` | Avoid restricted iteration keywords: break, continue.                                                    |
+| `PYNUDGER20` | Avoid restricted compatibility functionality: object, basestring, unicode, long.                         |
+| `PYNUDGER21` | Avoid restricted utility/interactive functions: breakpoint, help, id.                                    |
+| `PYNUDGER22` | Avoid restricted explicit casting functionality: typing.cast, cast, bool, float, int, str.               |
+| `PYNUDGER23` | Avoid restricted insecure builtin functions: exec, eval, compile.                                        |
+| `PYNUDGER24` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                           |
+| `PYNUDGER25` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir. |
+| `PYNUDGER26` | Avoid restricted explicit dunder access: attributes starting with `__`.                                  |
+| `PYNUDGER27` | Avoid returning empty strings. Return None to indicate lack of value.                                    |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
