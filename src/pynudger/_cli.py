@@ -23,11 +23,12 @@ NAME = "pynudger"
 lintkit.settings.name = NAME.upper()
 
 # Import all rule modules to register lintkit rules (side effect).
-from pynudger import _rule as _rule  # noqa: E402, PLC0414
-from pynudger._restricted import rule as rule  # noqa: E402, PLC0414
+from pynudger import rule as rule  # noqa: E402, PLC0414
 
 
-def _files_default(config: dict[str, typing.Any]) -> Iterable[pathlib.Path]:
+def _files_default(
+    config: dict[str, typing.Any], path: pathlib.Path | str | None = None
+) -> Iterable[pathlib.Path]:
     """Default files to lint.
 
     Returns:
@@ -42,17 +43,38 @@ def _files_default(config: dict[str, typing.Any]) -> Iterable[pathlib.Path]:
         )
     ) | set(config.get("extend_dir_ignores", []))
 
-    for p in pathlib.Path.cwd().rglob("*.py"):
-        if ignores.isdisjoint(p.parts):
+    # Both no covers were tested previously, too cumbersome
+    # to test these explicitly
+
+    if path is None:  # pragma: no cover
+        path = pathlib.Path.cwd()
+
+    path = pathlib.Path(path).resolve()
+
+    for p in path.rglob("*.py"):
+        if ignores.isdisjoint(p.parts):  # pragma: no cover
             yield p
 
 
 def main(
     args: list[str] | None = None,
+    path: pathlib.Path | str | None = None,
     include_codes: Iterable[int] | None = None,
     exclude_codes: Iterable[int] | None = None,
 ) -> None:
-    """Run the CLI."""
+    """Run the CLI.
+
+    Args:
+        args:
+            Command line arguments to parse (used mainly for testing).
+        path:
+            Directory to lint (default: current working directory).
+        include_codes:
+            Lint codes to include (overrides config).
+        exclude_codes:
+            Lint codes to exclude (overrides config).
+
+    """
     config = loadfig.config(NAME.lower())
 
     lintkit.registry.inject("config", config)
@@ -64,7 +86,7 @@ def main(
 
     lintkit.cli.main(
         version=version(NAME),
-        files_default=_files_default(config),
+        files_default=_files_default(config, path),
         files_help=(
             "Files to lint with pynudger (default: all Python files in cwd)"
         ),

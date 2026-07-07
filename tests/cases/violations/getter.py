@@ -3,6 +3,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Restricted rule implementation package."""
+"""Testing getters rule violations."""
 
 from __future__ import annotations
+
+
+class GetterClass:
+    """Dummy getter class."""
+
+
+def getter_function() -> None:
+    """Dummy getter function."""

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -854,7 +854,7 @@ sort_commits = "oldest"
 
 tests = { composite = [
   "pdm run refresh",
-  "pdm run coverage run -m pytest -x --pretty {args:tests}",
+  "pdm run coverage run -m pytest -v -x --pretty {args:tests}",
   "pdm run coverage report",
 ] }
 tests-all = { composite = [
