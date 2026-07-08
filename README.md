@@ -176,7 +176,7 @@ by placing the following somewhere in the file (preferably at the top):
 
 `pynudger` provides the following rules:
 
-<!-- pyml disable-num-lines 35 line-length-->
+<!-- pyml disable-num-lines 36 line-length-->
 
 | Name         | Description                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------------- |
@@ -209,21 +209,25 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER26` | Avoid restricted explicit dunder access: attributes starting with `__`.                                  |
 | `PYNUDGER27` | Avoid returning empty strings. Return None to indicate lack of value.                                    |
 | `PYNUDGER28` | Avoid more than <N> assert statements in pytest tests. Keep each test focused.                           |
+| `PYNUDGER29` | Avoid modules with more than <N> **total** lines. Split code into focused modules.                       |
+| `PYNUDGER30` | Avoid modules with more than <N> **code** lines. Split code into focused modules.                        |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
-<!-- pyml disable-num-lines 10 line-length-->
+<!-- pyml disable-num-lines 13 line-length-->
 
-| Option                 | Description                                                           | Affected rules         | Default                                                    |
-| ---------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
-| `pascal_length`        | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
-| `snake_length`         | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
-| `pascal_excludes`      | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
-| `snake_excludes`       | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
-| `maximum_test_asserts` | Maximum number of `assert` statements in pytest tests                 | PYNUDGER28             | 1                                                          |
-| `dir_ignores`          | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
-| `extend_dir_ignores`   | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
+| Option                  | Description                                                           | Affected rules         | Default                                                    |
+| ----------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `pascal_length`         | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
+| `snake_length`          | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
+| `pascal_excludes`       | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
+| `snake_excludes`        | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
+| `maximum_test_asserts`  | Maximum number of `assert` statements in pytest tests                 | PYNUDGER28             | 1                                                          |
+| `max_module_lines`      | Maximum number of **any** lines in a Python module                    | PYNUDGER29             | 600                                                        |
+| `max_module_code_lines` | Maximum number of **code** lines in a Python module                   | PYNUDGER30             | 200                                                        |
+| `dir_ignores`           | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
+| `extend_dir_ignores`    | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 
 ## Contribute
 
