@@ -9,5 +9,10 @@ from __future__ import annotations
 
 
 async def empty_return() -> str:
-    """Return an empty string."""
+    """Return an empty string.
+
+    Returns:
+        Empty string value.
+
+    """
     return ""

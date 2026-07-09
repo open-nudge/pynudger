@@ -12,7 +12,12 @@ class NotDunder:
     """Dunder class."""
 
     def _dict__(self) -> int:
-        """Return a private attribute."""
+        """Return a private attribute.
+
+        Returns:
+            Private attribute value.
+
+        """
         return 42
 
     def not_dunder(self) -> int:

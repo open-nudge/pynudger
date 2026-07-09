@@ -87,7 +87,7 @@ class Function(_Definition, abc.ABC):
             Always ast.FunctionDef
 
         """
-        return (ast.FunctionDef,)
+        return (ast.FunctionDef, ast.AsyncFunctionDef)
 
 
 class Return(_Definition, abc.ABC):

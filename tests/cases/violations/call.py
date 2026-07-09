@@ -13,7 +13,12 @@ if typing.TYPE_CHECKING:
 
 
 def compatibility() -> object:
-    """Should violate compatibility call rule 20."""
+    """Should violate compatibility call rule 20.
+
+    Returns:
+        Restricted compatibility object.
+
+    """
     return object()
 
 
@@ -23,7 +28,12 @@ def interactive() -> None:
 
 
 def cast() -> int:
-    """Should violate cast call rule 22."""
+    """Should violate cast call rule 22.
+
+    Returns:
+        Cast integer value.
+
+    """
     return typing.cast("int", 42)
 
 
@@ -33,10 +43,20 @@ def insecure() -> None:
 
 
 def iteration() -> Iterator[typing.Any]:
-    """Should violate iteration call rule 24."""
+    """Should violate iteration call rule 24.
+
+    Returns:
+        Iterator from restricted call.
+
+    """
     return iter([])
 
 
 def attribute() -> dict[str, typing.Any]:
-    """Should violate attribute call rule 25."""
+    """Should violate attribute call rule 25.
+
+    Returns:
+        Dictionary from restricted attribute call.
+
+    """
     return globals()
