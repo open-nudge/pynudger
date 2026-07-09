@@ -9,5 +9,10 @@ from __future__ import annotations
 
 
 def not_empty_return() -> str:
-    """Return a non-empty string."""
+    """Return a non-empty string.
+
+    Returns:
+        Non-empty string value.
+
+    """
     return "value"

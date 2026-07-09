@@ -176,7 +176,7 @@ by placing the following somewhere in the file (preferably at the top):
 
 `pynudger` provides the following rules:
 
-<!-- pyml disable-num-lines 36 line-length-->
+<!-- pyml disable-num-lines 80 line-length-->
 
 | Name         | Description                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------------- |
@@ -211,11 +211,12 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER28` | Avoid more than <N> assert statements in pytest tests. Keep each test focused.                           |
 | `PYNUDGER29` | Avoid modules with more than <N> **total** lines. Split code into focused modules.                       |
 | `PYNUDGER30` | Avoid modules with more than <N> **code** lines. Split code into focused modules.                        |
+| `PYNUDGER31` | Avoid undocumented function parameters. Add an `Args:` docstring section.                                |
+| `PYNUDGER32` | Avoid undocumented generator yields. Add a `Yields:` docstring section.                                  |
+| `PYNUDGER33` | Avoid undocumented return values. Add a `Returns:` docstring section.                                    |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
-
-<!-- pyml disable-num-lines 13 line-length-->
 
 | Option                  | Description                                                           | Affected rules         | Default                                                    |
 | ----------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
