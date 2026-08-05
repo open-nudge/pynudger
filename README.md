@@ -148,9 +148,13 @@ or a line span:
 def set_my_too_long_function_name():
     pass
 
+
 def set_another_long_function():
     pass
+
+
 # noqa-end: PYNUDGER0, PYNUDGER16
+
 
 def set_will_error_out_this_time():
     pass
