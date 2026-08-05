@@ -74,7 +74,7 @@ class SetGet(Regex, What, abc.ABC):
 
 
 class UtilHelperCommon(Regex, What, abc.ABC):
-    """Shared functionality of utils, helpers and commons."""
+    """Shared functionality of utils, helpers, commons, and shared names."""
 
     def message(self, _: lintkit.Value[str]) -> str:
         """Display error message in case of rule violation.

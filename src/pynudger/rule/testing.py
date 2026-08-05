@@ -20,7 +20,7 @@ class AssertCount(
     lintkit.check.Check,
     lintkit.loader.Python,
     lintkit.rule.Node,
-    code=28,
+    code=31,
 ):
     """Rule checking extra assert statements in pytest tests."""
 

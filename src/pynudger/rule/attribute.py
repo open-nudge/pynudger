@@ -14,7 +14,7 @@ import lintkit
 from pynudger._loader import Attribute
 
 
-class Dunder(lintkit.check.Check, Attribute, code=26):
+class Dunder(lintkit.check.Check, Attribute, code=29):
     """Rule checking restricted explicit dunder attribute access."""
 
     def check(self, value: lintkit.Value[typing.Any]) -> bool:

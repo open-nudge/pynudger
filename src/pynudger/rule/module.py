@@ -23,7 +23,7 @@ class Lines(
     lintkit.check.Check,
     lintkit.loader.Python,
     lintkit.rule.Node,
-    code=29,
+    code=32,
 ):
     """Rule checking Python modules with too many code lines."""
 
@@ -93,7 +93,7 @@ class CodeLines(
     lintkit.check.Check,
     lintkit.loader.Python,
     lintkit.rule.Node,
-    code=30,
+    code=33,
 ):
     """Rule checking Python modules with too many code lines."""
 

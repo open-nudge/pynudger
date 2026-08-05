@@ -158,13 +158,13 @@ class _Snake(_Length):
 
 
 # Length rules
-class LengthClass(_Pascal, Class, code=15):
+class LengthClass(_Pascal, Class, code=18):
     """Rule for checking class's name length (word-wise)."""
 
 
-class LengthFunction(_Snake, Function, code=16):
+class LengthFunction(_Snake, Function, code=19):
     """Rule for checking function's name length (word-wise)."""
 
 
-class LengthPath(_Snake, Path, code=17):
+class LengthPath(_Snake, Path, code=20):
     """Rule for checking path name length (word-wise)."""
