@@ -34,7 +34,7 @@ repos:
         entry: "conform enforce"
         pass_filenames: false
   - repo: "https://github.com/trufflesecurity/trufflehog"
-    rev: "00155c9dc586f34d189adc83d3ac2698c2ec551f"  # frozen: v3.95.8
+    rev: "6f3c981e7b77f235fd2702dd74af25fc4b72bf11"  # frozen: v3.96.0
     hooks:
       - id: "trufflehog"
         alias: "secrets"
@@ -50,7 +50,7 @@ repos:
           - "--licenses=MIT,Apache-2.0,BSD-2-Clause,BSD-3-Clause,Unlicense,Zlib,OFL-1.1,0BSD,PSF-2.0"
           - "./"
   - repo: "https://github.com/errata-ai/vale"
-    rev: "8c4ed0df90e45f93818ffed5ba587ff1e220a142"  # frozen: v3.15.1
+    rev: "fe71481c95665a2343d81874489f8b012442a377"  # frozen: v3.17.0
     hooks:
       - id: "vale"
         alias: "setup-natural-language"
@@ -62,7 +62,7 @@ repos:
         stages:
           - "pre-commit"
   - repo: "https://github.com/errata-ai/vale"
-    rev: "8c4ed0df90e45f93818ffed5ba587ff1e220a142"  # frozen: v3.15.1
+    rev: "fe71481c95665a2343d81874489f8b012442a377"  # frozen: v3.17.0
     hooks:
       - id: "vale"
         alias: "natural-language"
@@ -337,6 +337,7 @@ repos:
         entry: "pdm run -v check-security"
         language: "system"
         require_serial: true
+        exclude: "^pdm.lock$"
       - id: "release"
         name: "<<<CHECK>>> Release"
         entry: "pdm run -v check-release"

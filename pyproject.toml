@@ -319,6 +319,8 @@ lint.extend-ignore = [
   "ISC001",
   # Prefer absolute imports over relative imports from parent modules
   "TID252",
+  # Incorrect copyright parsing
+  "CPY001",
 ]
 
 lint.extend-per-file-ignores."tests/**.py" = [
@@ -854,7 +856,7 @@ sort_commits = "oldest"
 
 tests = { composite = [
   "pdm run refresh",
-  "pdm run coverage run -m pytest -v -x --pretty {args:tests}",
+  "pdm run coverage run -m pytest -vv -x --pretty {args:tests}",
   "pdm run coverage report",
 ] }
 tests-all = { composite = [

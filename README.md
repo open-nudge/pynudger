@@ -148,9 +148,13 @@ or a line span:
 def set_my_too_long_function_name():
     pass
 
+
 def set_another_long_function():
     pass
+
+
 # noqa-end: PYNUDGER0, PYNUDGER16
+
 
 def set_will_error_out_this_time():
     pass
@@ -214,21 +218,30 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER31` | Avoid undocumented function parameters. Add an `Args:` docstring section.                                |
 | `PYNUDGER32` | Avoid undocumented generator yields. Add a `Yields:` docstring section.                                  |
 | `PYNUDGER33` | Avoid undocumented return values. Add a `Returns:` docstring section.                                    |
+| `PYNUDGER34` | Avoid small, rarely used internal functions.                                                             |
+| `PYNUDGER35` | Avoid small, rarely used internal classes.                                                               |
+| `PYNUDGER36` | Avoid small, rarely used internal methods.                                                               |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
-| Option                  | Description                                                           | Affected rules         | Default                                                    |
-| ----------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
-| `pascal_length`         | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
-| `snake_length`          | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
-| `pascal_excludes`       | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
-| `snake_excludes`        | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
-| `maximum_test_asserts`  | Maximum number of `assert` statements in pytest tests                 | PYNUDGER28             | 1                                                          |
-| `max_module_lines`      | Maximum number of **any** lines in a Python module                    | PYNUDGER29             | 600                                                        |
-| `max_module_code_lines` | Maximum number of **code** lines in a Python module                   | PYNUDGER30             | 200                                                        |
-| `dir_ignores`           | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
-| `extend_dir_ignores`    | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
+| Option                             | Description                                                           | Affected rules         | Default                                                    |
+| ---------------------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `pascal_length`                    | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
+| `snake_length`                     | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
+| `pascal_excludes`                  | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
+| `snake_excludes`                   | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
+| `maximum_test_asserts`             | Maximum number of `assert` statements in pytest tests                 | PYNUDGER28             | 1                                                          |
+| `max_module_lines`                 | Maximum number of **any** lines in a Python module                    | PYNUDGER29             | 600                                                        |
+| `max_module_code_lines`            | Maximum number of **code** lines in a Python module                   | PYNUDGER30             | 200                                                        |
+| `minimum_internal_function_usages` | Minimum same-file usages for internal functions                       | PYNUDGER34             | 2                                                          |
+| `minimum_internal_function_lines`  | Minimum code lines for internal functions                             | PYNUDGER34             | 5                                                          |
+| `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                         | PYNUDGER35             | 2                                                          |
+| `minimum_internal_class_lines`     | Minimum code lines for internal classes                               | PYNUDGER35             | 5                                                          |
+| `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                         | PYNUDGER36             | 2                                                          |
+| `minimum_internal_method_lines`    | Minimum code lines for internal methods                               | PYNUDGER36             | 5                                                          |
+| `dir_ignores`                      | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
+| `extend_dir_ignores`               | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 
 ## Contribute
 
