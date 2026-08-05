@@ -25,7 +25,7 @@ type FunctionOwners = set[FunctionNode]
 class Arguments(
     lintkit.check.Check,
     Function,
-    code=31,
+    code=34,
 ):
     """Rule checking missing Args docstring sections."""
 
@@ -220,7 +220,7 @@ class _Owner(
         )
 
 
-class Yields(_Owner, code=32):
+class Yields(_Owner, code=35):
     """Rule checking missing Yields docstring sections."""
 
     def _predicate(
@@ -267,7 +267,7 @@ class Yields(_Owner, code=32):
         return self.description()
 
 
-class Returns(_Owner, code=33):
+class Returns(_Owner, code=36):
     """Rule checking missing Returns docstring sections."""
 
     def _predicate(

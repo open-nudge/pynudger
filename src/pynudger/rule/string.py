@@ -17,7 +17,7 @@ from pynudger._loader import Return
 class EmptyReturn(
     lintkit.check.Check,
     Return,
-    code=27,
+    code=30,
 ):
     """Rule checking empty string return values."""
 

@@ -107,19 +107,19 @@ class _Internal(
         return minimum_usages, minimum_lines
 
 
-class InternalFunction(_Internal, code=34):
+class InternalFunction(_Internal, code=37):
     """Rule checking module-level synchronous and asynchronous functions."""
 
     kind: typing.ClassVar[str] = "function"
 
 
-class InternalClass(_Internal, code=35):
+class InternalClass(_Internal, code=38):
     """Rule checking module-level classes."""
 
     kind: typing.ClassVar[str] = "class"
 
 
-class InternalMethod(_Internal, code=36):
+class InternalMethod(_Internal, code=39):
     """Rule checking methods of module-level classes."""
 
     kind: typing.ClassVar[str] = "method"

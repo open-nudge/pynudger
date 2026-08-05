@@ -76,7 +76,7 @@ class _Keywords(lintkit.check.Check, abc.ABC):
 class Compatibility(
     _Keywords,
     Call,
-    code=20,
+    code=23,
 ):
     """Rule checking restricted Python 2 compatibility functions."""
 
@@ -92,7 +92,7 @@ class Compatibility(
 class Interactive(
     _Keywords,
     Call,
-    code=21,
+    code=24,
 ):
     """Rule checking restricted utility and interactive functions."""
 
@@ -105,7 +105,7 @@ class Interactive(
         return ("help", "breakpoint")
 
 
-class Cast(_Keywords, Call, lintkit.rule.Node, code=22):
+class Cast(_Keywords, Call, lintkit.rule.Node, code=25):
     """Rule checking restricted explicit casting functionality."""
 
     def topic(self) -> str:
@@ -117,7 +117,7 @@ class Cast(_Keywords, Call, lintkit.rule.Node, code=22):
         return ("typing.cast", "cast", "bool", "float", "int", "str")
 
 
-class Insecure(_Keywords, Call, lintkit.rule.Node, code=23):
+class Insecure(_Keywords, Call, lintkit.rule.Node, code=26):
     """Rule checking restricted insecure builtin functions."""
 
     def topic(self) -> str:
@@ -129,7 +129,7 @@ class Insecure(_Keywords, Call, lintkit.rule.Node, code=23):
         return ("exec", "eval", "compile")
 
 
-class Iteration(_Keywords, Call, lintkit.rule.Node, code=24):
+class Iteration(_Keywords, Call, lintkit.rule.Node, code=27):
     """Rule checking restricted explicit iteration functions."""
 
     def topic(self) -> str:
@@ -145,7 +145,7 @@ class Attribute(
     _Keywords,
     Call,
     lintkit.rule.Node,
-    code=25,
+    code=28,
 ):
     """Rule checking restricted attribute manipulation functionality."""
 

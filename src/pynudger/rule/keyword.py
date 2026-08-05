@@ -78,7 +78,7 @@ class _Keyword(lintkit.check.Check, _Definition, abc.ABC):
         return f"Avoid restricted keywords: {', '.join(self.keywords())}"
 
 
-class State(_Keyword, lintkit.rule.Node, code=18):
+class State(_Keyword, lintkit.rule.Node, code=21):
     """Rule checking restricted state management keywords."""
 
     def ast_classes(
@@ -97,7 +97,7 @@ class State(_Keyword, lintkit.rule.Node, code=18):
         return ("del", "global", "nonlocal")
 
 
-class Iteration(_Keyword, lintkit.rule.Node, code=19):
+class Iteration(_Keyword, lintkit.rule.Node, code=22):
     """Rule checking restricted iteration keywords."""
 
     def ast_classes(self) -> tuple[type[ast.Break], type[ast.Continue]]:

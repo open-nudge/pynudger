@@ -54,7 +54,7 @@ naming conventions and making your code "more Pythonic".
 - __Length rules__: Too long class/function names are flagged.
 - __Setters/getters__: Discourages usage of setters/getters,
     encourages properties instead.
-- __No helpers/utils/commons__: Incentivizes more descriptive
+- __No helpers/utils/commons/shared names__: Incentivizes more descriptive
     and semantically coherent names for functionalities.
 
 ## Table of contents
@@ -137,14 +137,14 @@ You can disable `pynudger` on a line-by-line basis
 (you have to specify exact code), e.g.:
 
 ```python
-def set_my_too_long_function_name():  # noqa: PYNUDGER0, PYNUDGER16
+def set_my_too_long_function_name():  # noqa: PYNUDGER0, PYNUDGER19
     pass
 ```
 
 or a line span:
 
 ```python
-# noqa-start: PYNUDGER0, PYNUDGER16
+# noqa-start: PYNUDGER0, PYNUDGER19
 def set_my_too_long_function_name():
     pass
 
@@ -153,7 +153,7 @@ def set_another_long_function():
     pass
 
 
-# noqa-end: PYNUDGER0, PYNUDGER16
+# noqa-end: PYNUDGER0, PYNUDGER19
 
 
 def set_will_error_out_this_time():
@@ -164,7 +164,7 @@ It is also possible to disable all checks in a file
 by placing the following somewhere in the file (preferably at the top):
 
 ```python
-# noqa-file: PYNUDGER0, PYNUDGER16
+# noqa-file: PYNUDGER0, PYNUDGER19
 ```
 
 > [!NOTE]
@@ -199,47 +199,50 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER12` | Avoid using common in class names. Name the class appropriately.                                         |
 | `PYNUDGER13` | Avoid using common in function names. Name the function appropriately.                                   |
 | `PYNUDGER14` | Avoid defining common modules. Move functionality to appropriate modules.                                |
-| `PYNUDGER15` | Avoid long class names. Specify intent by nesting modules/packages.                                      |
-| `PYNUDGER16` | Avoid long function names. Specify intent by nesting modules/packages.                                   |
-| `PYNUDGER17` | Avoid long path names. Specify intent by nesting modules/packages.                                       |
-| `PYNUDGER18` | Avoid restricted state management keywords: del, global, nonlocal.                                       |
-| `PYNUDGER19` | Avoid restricted iteration keywords: break, continue.                                                    |
-| `PYNUDGER20` | Avoid restricted compatibility functionality: object, basestring, unicode, long.                         |
-| `PYNUDGER21` | Avoid restricted utility/interactive functions: breakpoint, help, id.                                    |
-| `PYNUDGER22` | Avoid restricted explicit casting functionality: typing.cast, cast, bool, float, int, str.               |
-| `PYNUDGER23` | Avoid restricted insecure builtin functions: exec, eval, compile.                                        |
-| `PYNUDGER24` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                           |
-| `PYNUDGER25` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir. |
-| `PYNUDGER26` | Avoid restricted explicit dunder access: attributes starting with `__`.                                  |
-| `PYNUDGER27` | Avoid returning empty strings. Return None to indicate lack of value.                                    |
-| `PYNUDGER28` | Avoid more than <N> assert statements in pytest tests. Keep each test focused.                           |
-| `PYNUDGER29` | Avoid modules with more than <N> **total** lines. Split code into focused modules.                       |
-| `PYNUDGER30` | Avoid modules with more than <N> **code** lines. Split code into focused modules.                        |
-| `PYNUDGER31` | Avoid undocumented function parameters. Add an `Args:` docstring section.                                |
-| `PYNUDGER32` | Avoid undocumented generator yields. Add a `Yields:` docstring section.                                  |
-| `PYNUDGER33` | Avoid undocumented return values. Add a `Returns:` docstring section.                                    |
-| `PYNUDGER34` | Avoid small, rarely used internal functions.                                                             |
-| `PYNUDGER35` | Avoid small, rarely used internal classes.                                                               |
-| `PYNUDGER36` | Avoid small, rarely used internal methods.                                                               |
+| `PYNUDGER15` | Avoid using shared in class names. Name the class appropriately.                                         |
+| `PYNUDGER16` | Avoid using shared in function names. Name the function appropriately.                                   |
+| `PYNUDGER17` | Avoid defining shared modules. Move functionality to appropriate modules.                                |
+| `PYNUDGER18` | Avoid long class names. Specify intent by nesting modules/packages.                                      |
+| `PYNUDGER19` | Avoid long function names. Specify intent by nesting modules/packages.                                   |
+| `PYNUDGER20` | Avoid long path names. Specify intent by nesting modules/packages.                                       |
+| `PYNUDGER21` | Avoid restricted state management keywords: del, global, nonlocal.                                       |
+| `PYNUDGER22` | Avoid restricted iteration keywords: break, continue.                                                    |
+| `PYNUDGER23` | Avoid restricted compatibility functionality: object, basestring, unicode, long.                         |
+| `PYNUDGER24` | Avoid restricted utility/interactive functions: breakpoint, help, id.                                    |
+| `PYNUDGER25` | Avoid restricted explicit casting functionality: typing.cast, cast, bool, float, int, str.               |
+| `PYNUDGER26` | Avoid restricted insecure builtin functions: exec, eval, compile.                                        |
+| `PYNUDGER27` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                           |
+| `PYNUDGER28` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir. |
+| `PYNUDGER29` | Avoid restricted explicit dunder access: attributes starting with `__`.                                  |
+| `PYNUDGER30` | Avoid returning empty strings. Return None to indicate lack of value.                                    |
+| `PYNUDGER31` | Avoid more than <N> assert statements in pytest tests. Keep each test focused.                           |
+| `PYNUDGER32` | Avoid modules with more than <N> **total** lines. Split code into focused modules.                       |
+| `PYNUDGER33` | Avoid modules with more than <N> **code** lines. Split code into focused modules.                        |
+| `PYNUDGER34` | Avoid undocumented function parameters. Add an `Args:` docstring section.                                |
+| `PYNUDGER35` | Avoid undocumented generator yields. Add a `Yields:` docstring section.                                  |
+| `PYNUDGER36` | Avoid undocumented return values. Add a `Returns:` docstring section.                                    |
+| `PYNUDGER37` | Avoid small, rarely used internal functions.                                                             |
+| `PYNUDGER38` | Avoid small, rarely used internal classes.                                                               |
+| `PYNUDGER39` | Avoid small, rarely used internal methods.                                                               |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
 | Option                             | Description                                                           | Affected rules         | Default                                                    |
 | ---------------------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
-| `pascal_length`                    | Maximum allowed length of PascalCase names                            | PYNUDGER15             | 3                                                          |
-| `snake_length`                     | Maximum allowed length of snake_case names                            | PYNUDGER16, PYNUDGER17 | 3                                                          |
-| `pascal_excludes`                  | List of words to exclude from PascalCase length check                 | PYNUDGER15             | []                                                         |
-| `snake_excludes`                   | List of words to exclude from snake_case length check                 | PYNUDGER16, PYNUDGER17 | []                                                         |
-| `maximum_test_asserts`             | Maximum number of `assert` statements in pytest tests                 | PYNUDGER28             | 1                                                          |
-| `max_module_lines`                 | Maximum number of **any** lines in a Python module                    | PYNUDGER29             | 600                                                        |
-| `max_module_code_lines`            | Maximum number of **code** lines in a Python module                   | PYNUDGER30             | 200                                                        |
-| `minimum_internal_function_usages` | Minimum same-file usages for internal functions                       | PYNUDGER34             | 2                                                          |
-| `minimum_internal_function_lines`  | Minimum code lines for internal functions                             | PYNUDGER34             | 5                                                          |
-| `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                         | PYNUDGER35             | 2                                                          |
-| `minimum_internal_class_lines`     | Minimum code lines for internal classes                               | PYNUDGER35             | 5                                                          |
-| `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                         | PYNUDGER36             | 2                                                          |
-| `minimum_internal_method_lines`    | Minimum code lines for internal methods                               | PYNUDGER36             | 5                                                          |
+| `pascal_length`                    | Maximum allowed length of PascalCase names                            | PYNUDGER18             | 3                                                          |
+| `snake_length`                     | Maximum allowed length of snake_case names                            | PYNUDGER19, PYNUDGER20 | 3                                                          |
+| `pascal_excludes`                  | List of words to exclude from PascalCase length check                 | PYNUDGER18             | []                                                         |
+| `snake_excludes`                   | List of words to exclude from snake_case length check                 | PYNUDGER19, PYNUDGER20 | []                                                         |
+| `maximum_test_asserts`             | Maximum number of `assert` statements in pytest tests                 | PYNUDGER31             | 1                                                          |
+| `max_module_lines`                 | Maximum number of **any** lines in a Python module                    | PYNUDGER32             | 600                                                        |
+| `max_module_code_lines`            | Maximum number of **code** lines in a Python module                   | PYNUDGER33             | 200                                                        |
+| `minimum_internal_function_usages` | Minimum same-file usages for internal functions                       | PYNUDGER37             | 2                                                          |
+| `minimum_internal_function_lines`  | Minimum code lines for internal functions                             | PYNUDGER37             | 5                                                          |
+| `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                         | PYNUDGER38             | 2                                                          |
+| `minimum_internal_class_lines`     | Minimum code lines for internal classes                               | PYNUDGER38             | 5                                                          |
+| `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                         | PYNUDGER39             | 2                                                          |
+| `minimum_internal_method_lines`    | Minimum code lines for internal methods                               | PYNUDGER39             | 5                                                          |
 | `dir_ignores`                      | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
 | `extend_dir_ignores`               | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 
