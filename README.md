@@ -218,19 +218,6 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER35` | Avoid small, rarely used internal classes.                                                               |
 | `PYNUDGER36` | Avoid small, rarely used internal methods.                                                               |
 
-The internal definition rules analyze one Python module at a time. They include
-synchronous and asynchronous functions and methods. Functions and classes with
-any leading underscore are internal. Methods with exactly one leading
-underscore are internal; dunder methods are excluded.
-
-Usage is counted from same-file syntactic references. Functions and classes use
-load references to their exact name. Methods use load references through a
-direct `self`, `cls`, or owning-class receiver. Aliases, imports, inheritance,
-`super()`, chained receivers, variables, and references from other files are
-not resolved. A candidate violates a rule only when both its usage count and
-its code-line count are strictly below their configured minimums. A value equal
-to either minimum is clean.
-
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
