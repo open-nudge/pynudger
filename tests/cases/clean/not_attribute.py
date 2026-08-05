@@ -29,4 +29,4 @@ class NotDunder:
             Almost private __dict__ attribute.
 
         """
-        return self._dict__()
+        return self._dict__() + self._dict__()

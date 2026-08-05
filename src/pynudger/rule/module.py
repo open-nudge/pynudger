@@ -7,13 +7,15 @@
 
 from __future__ import annotations
 
-import ast
 import itertools
 import typing
 
 import lintkit
 
+from pynudger.rule import _code
+
 if typing.TYPE_CHECKING:
+    import ast
     import collections.abc
 
 
@@ -104,31 +106,15 @@ class CodeLines(
         """
         # enq: optional access fine as it is always initialised in lintkit
         split = self.content.splitlines()  # pyright: ignore[reportOptionalMemberAccess]
-
-        lines = len(split)
-        lines -= len([line for line in split if not line.strip()])
-        lines -= len([line for line in split if line.lstrip().startswith("#")])
-
-        types_with_docstring = (
-            ast.Module,
-            ast.ClassDef,
-            ast.FunctionDef,
-            ast.AsyncFunctionDef,
+        tree: ast.Module = self.getitem("ast")
+        nodes_map: dict[type[ast.AST], list[ast.AST]] = self.getitem(
+            "nodes_map"
         )
-
-        nodes_map = self.getitem("nodes_map")
-        nodes_with_docstring = itertools.chain.from_iterable(
-            nodes_map[t] for t in types_with_docstring
+        docstring_nodes = itertools.chain.from_iterable(
+            nodes_map[node_type]
+            for node_type in typing.get_args(_code.Node.__value__)
         )
-
-        for node in nodes_with_docstring:
-            if ast.get_docstring(node, clean=False) is not None:
-                docstring = node.body[0]
-                lines -= docstring.end_lineno - docstring.lineno + 1
-            else:  # pragma: no cover
-                pass
-
-        yield lintkit.Value(lines)
+        yield lintkit.Value(_code.lines(tree, split, docstring_nodes))
 
     def check(self, value: lintkit.Value[int]) -> bool:
         """Report modules with too many counted code lines.

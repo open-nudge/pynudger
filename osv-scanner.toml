@@ -8,7 +8,27 @@
 # See here: https://github.com/ossf/scorecard/blob/main/docs/checks.md#branch-protection
 # for the checks performed by OSSF Scorecard related to OSV scanning
 [[IgnoredVulns]]
-id = "PYSEC-2026-237"
+id = "PYSEC-2026-3545"
+reason = "Affects dev dependency"
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3546"
+reason = "Affects dev dependency"
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3547"
+reason = "Affects dev dependency"
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3481"
+reason = "Affects dev dependency"
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3482"
+reason = "Affects dev dependency"
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3483"
 reason = "Affects dev dependency"
 
 [[IgnoredVulns]]
@@ -478,6 +498,12 @@ reason = "dev dependency"
 
 [[PackageOverrides]]
 ecosystem = "PyPI"
+name = "cffi"
+license.ignore = true
+reason = "dev dependency"
+
+[[PackageOverrides]]
+ecosystem = "PyPI"
 name = "chardet"
 license.ignore = true
 reason = "dev dependency"
@@ -575,6 +601,12 @@ reason = "dev dependency"
 [[PackageOverrides]]
 ecosystem = "PyPI"
 name = "gitdb"
+license.ignore = true
+reason = "dev dependency"
+
+[[PackageOverrides]]
+ecosystem = "PyPI"
+name = "gitpython"
 license.ignore = true
 reason = "dev dependency"
 
