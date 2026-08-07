@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 
-class CommonClass:
-    """Dummy common class."""
+class SharedClass:
+    """Dummy shared class."""
 
 
-def common_function() -> None:
-    """Dummy common function."""
+def shared_function() -> None:
+    """Dummy shared function."""

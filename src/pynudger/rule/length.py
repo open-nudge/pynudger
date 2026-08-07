@@ -8,12 +8,12 @@
 from __future__ import annotations
 
 import abc
-import re
 import typing
 
 import lintkit
 
 from pynudger._loader import Class, Function, Path
+from pynudger.rule import _words
 
 
 class _Length(lintkit.check.Check, abc.ABC):
@@ -117,15 +117,8 @@ class _Pascal(_Length):
             List of words
 
         """
-        return re.sub(
-            "([A-Z][a-z]+)",
-            r" \1",
-            re.sub(
-                "([A-Z]+)",
-                r" \1",
-                value.__wrapped__,  # pyright: ignore[reportUnknownArgumentType, reportAttributeAccessIssue]
-            ),
-        ).split()
+        # Necessary as `re.sub` does not work with the proxy :(
+        return _words.pascal(value.__wrapped__)  # pyright: ignore[reportUnknownArgumentType, reportAttributeAccessIssue]
 
 
 class _Snake(_Length):
@@ -150,11 +143,7 @@ class _Snake(_Length):
             List of words
 
         """
-        if value.startswith("__") and value.endswith("__"):
-            return value[2:-2].split("_")
-        if value.startswith("_"):
-            return value[1:].split("_")
-        return value.split("_")
+        return _words.snake(value)
 
 
 # Length rules
