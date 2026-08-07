@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 
-class HelperClass:
+class HelpClass:
     """Dummy helper class."""
 
 
-def helper_function() -> None:
+def help_function() -> None:
     """Dummy helper function."""

@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 
-class SetterClass:
+class SetClass:
     """Dummy setter class."""
 
 
-def setter_function() -> None:
+def set_function() -> None:
     """Dummy setter function."""

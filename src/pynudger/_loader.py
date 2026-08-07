@@ -64,6 +64,23 @@ class _Definition(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
 # Concrete loaders
 
 
+class Variable(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
+    """Loader for variable binding names."""
+
+    def values(self) -> Iterable[lintkit.Value[str]]:
+        """Yield names bound by store operations in all scopes.
+
+        Yields:
+            Names represented by ``ast.Name`` nodes with ``ast.Store``
+            context.
+
+        """
+        data: list[ast.Name] = self.getitem("nodes_map")[ast.Name]
+        for node in data:
+            if isinstance(node.ctx, ast.Store):
+                yield lintkit.Value.from_python(node.id, node)
+
+
 class Class(_Definition, abc.ABC):
     """Loader for class definitions."""
 

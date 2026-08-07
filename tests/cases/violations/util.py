@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 
-class UtilClass:
+class UtilityClass:
     """Dummy util class."""
 
 
-def util_function() -> None:
+def utility_function() -> None:
     """Dummy util function."""

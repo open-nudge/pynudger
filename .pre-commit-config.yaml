@@ -41,7 +41,7 @@ repos:
         name: "<<<CHECK>>> Secrets"
         verbose: true
   - repo: "https://github.com/google/osv-scanner/"
-    rev: "b56b5191101d5f27d4787d5583d8d01e9518a7af"  # frozen: v2.4.0
+    rev: "a258868211a57052da6bd323f758b8388dee02bb"  # frozen: v2.5.0
     hooks:
       - id: "osv-scanner"
         name: "<<<CHECK>>> OSV Scanner"
@@ -50,7 +50,7 @@ repos:
           - "--licenses=MIT,Apache-2.0,BSD-2-Clause,BSD-3-Clause,Unlicense,Zlib,OFL-1.1,0BSD,PSF-2.0"
           - "./"
   - repo: "https://github.com/errata-ai/vale"
-    rev: "fe71481c95665a2343d81874489f8b012442a377"  # frozen: v3.17.0
+    rev: "bc78bf3a639f29eef5c6bc3f0680105a82ef46f7"  # frozen: v3.17.1
     hooks:
       - id: "vale"
         alias: "setup-natural-language"
@@ -62,7 +62,7 @@ repos:
         stages:
           - "pre-commit"
   - repo: "https://github.com/errata-ai/vale"
-    rev: "fe71481c95665a2343d81874489f8b012442a377"  # frozen: v3.17.0
+    rev: "bc78bf3a639f29eef5c6bc3f0680105a82ef46f7"  # frozen: v3.17.1
     hooks:
       - id: "vale"
         alias: "natural-language"

@@ -224,6 +224,9 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER37` | Avoid small, rarely used internal functions.                                                             |
 | `PYNUDGER38` | Avoid small, rarely used internal classes.                                                               |
 | `PYNUDGER39` | Avoid small, rarely used internal methods.                                                               |
+| `PYNUDGER40` | Avoid repeating module names in variables.                                                               |
+| `PYNUDGER41` | Avoid repeating module names in classes.                                                                 |
+| `PYNUDGER42` | Avoid repeating module names in functions.                                                               |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):

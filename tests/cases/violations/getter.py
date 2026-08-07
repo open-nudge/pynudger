@@ -8,9 +8,9 @@
 from __future__ import annotations
 
 
-class GetterClass:
+class GetClass:
     """Dummy getter class."""
 
 
-def getter_function() -> None:
+def get_function() -> None:
     """Dummy getter function."""
