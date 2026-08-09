@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """Test no accidental docstring rule violations."""
+# noqa-file: PYNUDGER43
 
 from __future__ import annotations
 

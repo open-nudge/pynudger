@@ -117,8 +117,7 @@ class _Pascal(_Length):
             List of words
 
         """
-        # Necessary as `re.sub` does not work with the proxy :(
-        return _words.pascal(value.__wrapped__)  # pyright: ignore[reportUnknownArgumentType, reportAttributeAccessIssue]
+        return _words.pascal(value)
 
 
 class _Snake(_Length):

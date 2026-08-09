@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """Test allowed and out-of-scope module-name identifiers."""
+# noqa-file: PYNUDGER43
 
 from __future__ import annotations
 

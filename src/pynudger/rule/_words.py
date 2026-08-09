@@ -9,8 +9,10 @@ from __future__ import annotations
 
 import re
 
+import lintkit
 
-def pascal(value: str) -> list[str]:
+
+def pascal(value: str | lintkit.Value[str]) -> list[str]:
     """Split a PascalCase name into words.
 
     Args:
@@ -21,14 +23,22 @@ def pascal(value: str) -> list[str]:
         Words separated by the same uppercase boundaries used by the
         PascalCase length rule.
     """
+    if isinstance(value, lintkit.Value):
+        unwrapped: str = value.__wrapped__
+    else:
+        unwrapped = value
     return re.sub(
         "([A-Z][a-z]+)",
         r" \1",
-        re.sub("([A-Z]+)", r" \1", value),
+        re.sub(
+            "([A-Z]+)",
+            r" \1",
+            unwrapped,  # pyright: ignore[reportUnknownArgumentType]
+        ),
     ).split()
 
 
-def snake(value: str) -> list[str]:
+def snake(value: str | lintkit.Value[str]) -> list[str]:
     """Split a snake_case name into words.
 
     Args:

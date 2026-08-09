@@ -14,7 +14,11 @@ import typing
 import lintkit
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable
+    import collections.abc
+
+type GlobalDefinitionNode = (
+    ast.Name | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef
+)
 
 # Shared functionality
 
@@ -23,31 +27,28 @@ class _Definition(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
     """Base class for loading configured AST nodes."""
 
     @abc.abstractmethod
-    def ast_classes(self) -> tuple[type[ast.AST]]:
-        """Return the AST class to look for.
+    def nodes(self) -> collections.abc.Iterable[ast.AST]:
+        """Return the configured AST nodes.
 
         Returns:
-            AST class to look for
+            Iterable of AST nodes handled by the concrete loader.
 
         """
         raise NotImplementedError
 
-    def values(self) -> Iterable[lintkit.Value[str]]:
-        """Yield all values of the specified AST class.
+    def values(
+        self,
+    ) -> collections.abc.Iterable[lintkit.Value[typing.Any]]:
+        """Wrap values from the configured AST nodes.
 
         Yields:
-            All values of the specified AST class.
+            Values extracted from the configured AST nodes.
 
         """
-        data: dict[type[ast.AST], list[ast.AST]] = self.getitem("nodes_map")
-        for ast_class in self.ast_classes():
-            for node in data[ast_class]:
-                yield lintkit.Value.from_python(
-                    self._unpack(node),
-                    node,
-                )
+        for node in self.nodes():
+            yield lintkit.Value.from_python(self.unpack(node), node)
 
-    def _unpack(self, node: ast.AST) -> str:
+    def unpack(self, node: ast.AST) -> typing.Any:
         """Extract the value from a node.
 
         Args:
@@ -64,62 +65,99 @@ class _Definition(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
 # Concrete loaders
 
 
-class Variable(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
+class Variable(_Definition, abc.ABC):
     """Loader for variable binding names."""
 
-    def values(self) -> Iterable[lintkit.Value[str]]:
+    def nodes(self) -> collections.abc.Iterable[ast.Name]:
         """Yield names bound by store operations in all scopes.
 
         Yields:
-            Names represented by ``ast.Name`` nodes with ``ast.Store``
-            context.
+            ``ast.Name`` nodes with ``ast.Store`` context.
 
         """
         data: list[ast.Name] = self.getitem("nodes_map")[ast.Name]
         for node in data:
             if isinstance(node.ctx, ast.Store):
-                yield lintkit.Value.from_python(node.id, node)
+                yield node
+
+    def unpack(self, node: ast.Name) -> str:
+        """Extract the value from a node.
+
+        Args:
+            node:
+                The AST node to extract the value from.
+
+        Returns:
+            The value loaded from the node.
+
+        """
+        return node.id
 
 
 class Class(_Definition, abc.ABC):
     """Loader for class definitions."""
 
-    def ast_classes(self) -> tuple[type[ast.AST], ...]:
-        """Return the AST classes to look for.
+    def nodes(self) -> collections.abc.Iterable[ast.ClassDef]:
+        """Return class definition nodes in their existing loader order.
 
         Returns:
-            Always ast.ClassDef
+            Iterable of ``ast.ClassDef`` nodes.
 
         """
-        return (ast.ClassDef,)
+        return self.getitem("nodes_map")[ast.ClassDef]
 
 
 class Function(_Definition, abc.ABC):
     """Loader for function definitions."""
 
-    def ast_classes(self) -> tuple[type[ast.AST], ...]:
-        """Return the AST classes to look for.
+    def nodes(
+        self,
+    ) -> collections.abc.Iterable[ast.FunctionDef | ast.AsyncFunctionDef]:
+        """Yield function definition nodes in their existing loader order.
 
-        Returns:
-            Always ast.FunctionDef
+        Yields:
+            Synchronous definitions followed by asynchronous definitions.
 
         """
-        return (ast.FunctionDef, ast.AsyncFunctionDef)
+        functions: list[ast.FunctionDef] = self.getitem("nodes_map")[
+            ast.FunctionDef
+        ]
+        async_functions: list[ast.AsyncFunctionDef] = self.getitem("nodes_map")[
+            ast.AsyncFunctionDef
+        ]
+        yield from functions
+        yield from async_functions
+
+
+class GlobalDefinition(_Definition, abc.ABC):
+    """Loader for supported module-scope declarations."""
+
+    def nodes(
+        self,
+    ) -> collections.abc.Iterable[GlobalDefinitionNode]:
+        """Return declarations from module-level control flow.
+
+        Returns:
+            Iterable of declarations outside class and function bodies.
+
+        """
+        tree: ast.Module = self.getitem("ast")
+        return _global_nodes(tree)
 
 
 class Return(_Definition, abc.ABC):
     """Loader for return statements."""
 
-    def ast_classes(self) -> tuple[type[ast.AST], ...]:
-        """Return the AST classes to look for.
+    def nodes(self) -> collections.abc.Iterable[ast.Return]:
+        """Return statement nodes.
 
         Returns:
-            Always ast.Return
+            Iterable of ``ast.Return`` nodes.
 
         """
-        return (ast.Return,)
+        return self.getitem("nodes_map")[ast.Return]
 
-    def _unpack(self, node: ast.Return) -> ast.expr | None:
+    def unpack(self, node: ast.Return) -> ast.expr | None:
         """Unwrap a return node to extract the returned value.
 
         Args:
@@ -136,16 +174,16 @@ class Return(_Definition, abc.ABC):
 class Attribute(_Definition, abc.ABC):
     """Loader for attribute access nodes."""
 
-    def ast_classes(self) -> tuple[type[ast.AST], ...]:
-        """Return the AST classes to look for.
+    def nodes(self) -> collections.abc.Iterable[ast.Attribute]:
+        """Return attribute access nodes.
 
         Returns:
-            Always ast.Attribute
+            Iterable of ``ast.Attribute`` nodes.
 
         """
-        return (ast.Attribute,)
+        return self.getitem("nodes_map")[ast.Attribute]
 
-    def _unpack(self, node: ast.Attribute) -> str:
+    def unpack(self, node: ast.Attribute) -> str:
         """Unwrap an attribute node to extract the attribute name.
 
         Args:
@@ -162,16 +200,16 @@ class Attribute(_Definition, abc.ABC):
 class Call(_Definition, abc.ABC):
     """Load restricted runtime calls by direct syntactic name."""
 
-    def ast_classes(self) -> tuple[type[ast.AST], ...]:
-        """Return the AST classes to look for.
+    def nodes(self) -> collections.abc.Iterable[ast.Call]:
+        """Return function call nodes.
 
         Returns:
-            Always ast.Call
+            Iterable of ``ast.Call`` nodes.
 
         """
-        return (ast.Call,)
+        return self.getitem("nodes_map")[ast.Call]
 
-    def _unpack(self, node: ast.Call) -> str:
+    def unpack(self, node: ast.Call) -> str:
         """Unwrap a function call node to extract the fully qualified name.
 
         Args:
@@ -188,14 +226,45 @@ class Call(_Definition, abc.ABC):
 class Path(lintkit.loader.File, lintkit.rule.Node, abc.ABC):
     """Loader for file paths."""
 
-    def values(self) -> Iterable[lintkit.Value[str]]:
+    def values(self) -> collections.abc.Iterable[lintkit.Value[str]]:
         """Yield the file path as a value.
 
         Yields:
             The file path as a value
         """
-        # COE: lintkit framework assures self.file is not None at this point
+        # enq: lintkit framework assures self.file is not None at this point
         yield lintkit.Value(str(self.file.stem))  # pyright: ignore[reportOptionalMemberAccess]
+
+
+def _global_nodes(
+    node: ast.AST,
+) -> collections.abc.Iterable[GlobalDefinitionNode]:
+    """Yield supported declarations without entering definition scopes.
+
+    Args:
+        node:
+            Current node in the module-scope traversal.
+
+    Yields:
+        Assignment names, classes, and functions.
+
+    """
+    if isinstance(node, ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
+        yield node
+        return
+    if isinstance(node, ast.Assign | ast.AnnAssign | ast.AugAssign):
+        targets = (
+            node.targets if isinstance(node, ast.Assign) else (node.target,)
+        )
+        yield from (
+            name
+            for target in targets
+            for name in ast.walk(target)
+            if isinstance(name, ast.Name) and isinstance(name.ctx, ast.Store)
+        )
+        return
+    for child in ast.iter_child_nodes(node):
+        yield from _global_nodes(child)
 
 
 def _call_unpack(node: ast.AST) -> str:

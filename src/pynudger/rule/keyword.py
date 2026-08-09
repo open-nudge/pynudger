@@ -15,9 +15,33 @@ import lintkit
 
 from pynudger._loader import _Definition
 
+if typing.TYPE_CHECKING:
+    import collections.abc
+
 
 class _Keyword(lintkit.check.Check, _Definition, abc.ABC):
     """Rule checking restricted state management keywords."""
+
+    def nodes(self) -> collections.abc.Iterable[ast.AST]:
+        """Yield restricted keyword nodes in configured class order.
+
+        Yields:
+            AST nodes for each restricted keyword class.
+
+        """
+        data: dict[type[ast.AST], list[ast.AST]] = self.getitem("nodes_map")
+        for ast_class in self.ast_classes():
+            yield from data[ast_class]
+
+    @abc.abstractmethod
+    def ast_classes(self) -> tuple[type[ast.AST], ...]:
+        """Return the restricted AST classes.
+
+        Returns:
+            AST classes handled by the concrete keyword rule.
+
+        """
+        raise NotImplementedError
 
     @abc.abstractmethod
     def keywords(self) -> tuple[str, ...]:
@@ -29,7 +53,7 @@ class _Keyword(lintkit.check.Check, _Definition, abc.ABC):
         """
         raise NotImplementedError
 
-    def _unpack(self, node: ast.AST) -> str:
+    def unpack(self, node: ast.AST) -> str:
         """Extract the value from a node.
 
         Args:
