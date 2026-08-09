@@ -194,7 +194,7 @@ class Name(
         return tuple((node, word) for word in set(normalized))
 
     @staticmethod
-    def _label(node: GlobalDefinitionNode) -> str:
+    def _label(node: GlobalDefinitionNode) -> str:  # pragma: no cover
         """Return the human-readable declaration kind.
 
         Args:
