@@ -71,7 +71,7 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
-  "lintkit[rich]>=1",
+  "lintkit[rich]>=1.2.1",
   "loadfig>=0.1.0",
 ]
 
@@ -322,6 +322,7 @@ lint.extend-ignore = [
   # Incorrect copyright parsing
   "CPY001",
 ]
+lint.external = [ "PYNUDGER" ]
 
 lint.extend-per-file-ignores."tests/**.py" = [
   # Pytest should not be a module

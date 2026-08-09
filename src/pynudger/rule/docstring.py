@@ -85,7 +85,7 @@ class Arguments(
         """
         return self.description()
 
-    def _unpack(self, node: ast.AST) -> ast.AST:
+    def unpack(self, node: ast.AST) -> ast.AST:
         """Extract the value from a node.
 
         Args:

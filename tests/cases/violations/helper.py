@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """Testing helper rule violations."""
+# noqa-file: PYNUDGER43
 
 from __future__ import annotations
 
