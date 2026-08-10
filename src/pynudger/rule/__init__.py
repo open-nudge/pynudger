@@ -28,6 +28,7 @@ from pynudger.rule import (
     shared,
     string,
     testing,
+    union,
     util,
 )
 
@@ -47,5 +48,6 @@ __all__ = [
     "shared",
     "string",
     "testing",
+    "union",
     "util",
 ]

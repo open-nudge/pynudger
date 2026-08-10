@@ -11,13 +11,11 @@ import ast
 import dataclasses
 import typing
 
+from pynudger import _types
 from pynudger.rule import _code
 
 if typing.TYPE_CHECKING:
     import collections.abc
-
-type DefinitionNode = ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef
-type Definition = tuple[DefinitionNode, str | None]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -37,7 +35,7 @@ class Candidate:
             Number of counted source code lines.
     """
 
-    node: DefinitionNode
+    node: _types.DefinitionNode
     name: str
     owner: str | None
     usage_count: int
@@ -103,7 +101,7 @@ def _is_internal(name: str, kind: str) -> bool:
 def _definitions(
     nodes: collections.abc.Iterable[ast.AST],
     owner: str | None = None,
-) -> collections.abc.Iterator[Definition]:
+) -> collections.abc.Iterator[_types.Definition]:
     """Yield module-level definitions and methods in their owning class.
 
     The traversal enters arbitrary module-level control-flow nodes so that
@@ -126,8 +124,8 @@ def _definitions(
 
     """
     for node in nodes:
-        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
-            yield node, owner
+        if isinstance(node, _types.to_ast(_types.FunctionNode)):
+            yield node, owner  # pyright: ignore[reportReturnType]
         elif isinstance(node, ast.ClassDef):
             if owner is None:
                 yield node, None
@@ -139,7 +137,7 @@ def _definitions(
 
 
 def _matches_kind(
-    node: DefinitionNode,
+    node: _types.DefinitionNode,
     owner: str | None,
     kind: str,
 ) -> bool:
@@ -159,7 +157,7 @@ def _matches_kind(
         otherwise ``False``.
 
     """
-    is_function = isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef)
+    is_function = isinstance(node, _types.to_ast(_types.FunctionNode))
     if kind == "class":
         return owner is None and isinstance(node, ast.ClassDef)
     if kind == "method":
@@ -169,7 +167,7 @@ def _matches_kind(
 
 def _usage_count(
     tree: ast.Module,
-    node: DefinitionNode,
+    node: _types.DefinitionNode,
     owner: str | None,
 ) -> int:
     """Count matching same-file references outside a candidate subtree.

@@ -228,6 +228,7 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER41` | Avoid repeating module names in classes.                                                                 |
 | `PYNUDGER42` | Avoid repeating module names in functions.                                                               |
 | `PYNUDGER43` | Group globals with shared name words under modules.                                                      |
+| `PYNUDGER44` | Avoid pipe type unions with more than the configured number of members.                                  |
 
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
@@ -248,6 +249,7 @@ or `.pynudger.toml`):
 | `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                         | PYNUDGER39             | 2                                                          |
 | `minimum_internal_method_lines`    | Minimum code lines for internal methods                               | PYNUDGER39             | 5                                                          |
 | `minimum_same_name_occurrences`    | Minimum declarations sharing a name word                              | PYNUDGER43             | 2                                                          |
+| `max_union_types`                  | Maximum members in a pipe type union                                  | PYNUDGER44             | 3                                                          |
 | `dir_ignores`                      | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
 | `extend_dir_ignores`               | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 

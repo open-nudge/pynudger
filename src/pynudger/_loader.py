@@ -9,16 +9,17 @@ from __future__ import annotations
 
 import abc
 import ast
+import itertools
 import typing
 
 import lintkit
 
+from pynudger import _node
+
 if typing.TYPE_CHECKING:
     import collections.abc
 
-type GlobalDefinitionNode = (
-    ast.Name | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef
-)
+    from pynudger import _types
 
 # Shared functionality
 
@@ -112,21 +113,17 @@ class Function(_Definition, abc.ABC):
 
     def nodes(
         self,
-    ) -> collections.abc.Iterable[ast.FunctionDef | ast.AsyncFunctionDef]:
+    ) -> collections.abc.Iterable[_types.FunctionNode]:
         """Yield function definition nodes in their existing loader order.
 
-        Yields:
+        Returns:
             Synchronous definitions followed by asynchronous definitions.
 
         """
-        functions: list[ast.FunctionDef] = self.getitem("nodes_map")[
-            ast.FunctionDef
-        ]
-        async_functions: list[ast.AsyncFunctionDef] = self.getitem("nodes_map")[
-            ast.AsyncFunctionDef
-        ]
-        yield from functions
-        yield from async_functions
+        return itertools.chain.from_iterable(
+            self.getitem("nodes_map")[t]
+            for t in [ast.FunctionDef, ast.AsyncFunctionDef]
+        )
 
 
 class GlobalDefinition(_Definition, abc.ABC):
@@ -134,7 +131,7 @@ class GlobalDefinition(_Definition, abc.ABC):
 
     def nodes(
         self,
-    ) -> collections.abc.Iterable[GlobalDefinitionNode]:
+    ) -> collections.abc.Iterable[_types.GlobalDefinitionNode]:
         """Return declarations from module-level control flow.
 
         Returns:
@@ -142,7 +139,37 @@ class GlobalDefinition(_Definition, abc.ABC):
 
         """
         tree: ast.Module = self.getitem("ast")
-        return _global_nodes(tree)
+        return _node.global_nodes(tree)
+
+
+class Type(_Definition, abc.ABC):
+    """Loader for explicit type-expression roots."""
+
+    def nodes(self) -> collections.abc.Iterable[ast.expr]:
+        """Yield explicit type-expression roots in grouped AST order.
+
+        Yields:
+            Annotation, return, alias, and type-variable bound expressions.
+
+        """
+        maybe_annotated = itertools.chain.from_iterable(
+            self.getitem("nodes_map")[t] for t in [ast.AnnAssign, ast.arg]
+        )
+        maybe_returns = itertools.chain.from_iterable(
+            self.getitem("nodes_map")[t]
+            for t in [ast.FunctionDef, ast.AsyncFunctionDef]
+        )
+        maybe_bound = self.getitem("nodes_map")[ast.TypeVar]
+        maybe_value = self.getitem("nodes_map")[ast.TypeAlias]
+
+        for field, nodes in zip(
+            ("annotation", "returns", "bound", "value"),
+            (maybe_annotated, maybe_returns, maybe_bound, maybe_value),
+            strict=True,
+        ):
+            for node in nodes:
+                if (value := getattr(node, field)) is not None:
+                    yield value
 
 
 class Return(_Definition, abc.ABC):
@@ -220,7 +247,7 @@ class Call(_Definition, abc.ABC):
             Name identifier or empty string.
 
         """
-        return _call_unpack(node.func)
+        return _node.call_name(node.func)
 
 
 class Path(lintkit.loader.File, lintkit.rule.Node, abc.ABC):
@@ -234,54 +261,3 @@ class Path(lintkit.loader.File, lintkit.rule.Node, abc.ABC):
         """
         # enq: lintkit framework assures self.file is not None at this point
         yield lintkit.Value(str(self.file.stem))  # pyright: ignore[reportOptionalMemberAccess]
-
-
-def _global_nodes(
-    node: ast.AST,
-) -> collections.abc.Iterable[GlobalDefinitionNode]:
-    """Yield supported declarations without entering definition scopes.
-
-    Args:
-        node:
-            Current node in the module-scope traversal.
-
-    Yields:
-        Assignment names, classes, and functions.
-
-    """
-    if isinstance(node, ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
-        yield node
-        return
-    if isinstance(node, ast.Assign | ast.AnnAssign | ast.AugAssign):
-        targets = (
-            node.targets if isinstance(node, ast.Assign) else (node.target,)
-        )
-        yield from (
-            name
-            for target in targets
-            for name in ast.walk(target)
-            if isinstance(name, ast.Name) and isinstance(name.ctx, ast.Store)
-        )
-        return
-    for child in ast.iter_child_nodes(node):
-        yield from _global_nodes(child)
-
-
-def _call_unpack(node: ast.AST) -> str:
-    """Unwrap a function call node to extract the fully qualified name.
-
-    Args:
-        node:
-            The function call node to unwrap.
-
-    Returns:
-        Name identifier or empty string.
-
-    """
-    if isinstance(node, ast.Name):
-        return node.id
-    if isinstance(node, ast.Attribute):
-        return f"{_call_unpack(node.value)}.{node.attr}"
-
-    # Graceful return that should never happen under normal circumstances
-    return ""  # pragma: no cover

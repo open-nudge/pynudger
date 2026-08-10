@@ -12,6 +12,7 @@ import typing
 
 import lintkit
 
+from pynudger import _types
 from pynudger.rule import _code
 
 if typing.TYPE_CHECKING:
@@ -107,12 +108,9 @@ class CodeLines(
         # enq: optional access fine as it is always initialised in lintkit
         split = self.content.splitlines()  # pyright: ignore[reportOptionalMemberAccess]
         tree: ast.Module = self.getitem("ast")
-        nodes_map: dict[type[ast.AST], list[ast.AST]] = self.getitem(
-            "nodes_map"
-        )
+        nodes_map: _types.NodeMap = self.getitem("nodes_map")
         docstring_nodes = itertools.chain.from_iterable(
-            nodes_map[node_type]
-            for node_type in typing.get_args(_code.Node.__value__)
+            nodes_map[node_type] for node_type in _types.to_ast(_types.Node)
         )
         yield lintkit.Value(_code.lines(tree, split, docstring_nodes))
 
