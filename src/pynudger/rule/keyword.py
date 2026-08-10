@@ -18,6 +18,8 @@ from pynudger._loader import _Definition
 if typing.TYPE_CHECKING:
     import collections.abc
 
+    from pynudger import _types
+
 
 class _Keyword(lintkit.check.Check, _Definition, abc.ABC):
     """Rule checking restricted state management keywords."""
@@ -29,7 +31,7 @@ class _Keyword(lintkit.check.Check, _Definition, abc.ABC):
             AST nodes for each restricted keyword class.
 
         """
-        data: dict[type[ast.AST], list[ast.AST]] = self.getitem("nodes_map")
+        data: _types.NodeMap = self.getitem("nodes_map")
         for ast_class in self.ast_classes():
             yield from data[ast_class]
 

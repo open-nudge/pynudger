@@ -24,7 +24,7 @@ from pynudger._loader import (
 from pynudger.rule import _words
 
 if typing.TYPE_CHECKING:
-    from pynudger._loader import GlobalDefinitionNode
+    from pynudger import _types
 
 
 class _Repetition(lintkit.check.Check):
@@ -98,7 +98,8 @@ class RepetitionFunction(_Repetition, Function, code=42):
 class _Candidate:
     """Represent one declaration word and its module-wide frequency."""
 
-    node: GlobalDefinitionNode
+    name: str
+    label: str
     word: str
     occurrences: int
 
@@ -127,7 +128,13 @@ class Name(
         ]
         counts = collections.Counter(word for _, word in candidates)
         for node, word in candidates:
-            candidate = _Candidate(node, word, counts[word])
+            name = node.id if isinstance(node, ast.Name) else node.name
+            candidate = _Candidate(
+                name=name,
+                label=self._label(node),
+                word=word,
+                occurrences=counts[word],
+            )
             yield lintkit.Value.from_python(candidate, node)
 
     def check(self, value: lintkit.Value[_Candidate]) -> bool:
@@ -156,10 +163,8 @@ class Name(
             Diagnostic with the declaration kind, name, and module name.
 
         """
-        node = typing.cast("GlobalDefinitionNode", value.node)
-        name = node.id if isinstance(node, ast.Name) else node.name
         return (
-            f"{self._label(node)} '{name}' should be placed under module "
+            f"{value.label} '{value.name}' should be placed under module "
             f"'{value.word}'."
         )
 
@@ -174,8 +179,8 @@ class Name(
 
     def _split_node(
         self,
-        node: GlobalDefinitionNode,
-    ) -> tuple[tuple[GlobalDefinitionNode, str], ...]:
+        node: _types.GlobalDefinitionNode,
+    ) -> tuple[tuple[_types.GlobalDefinitionNode, str], ...]:
         """Split one declaration into unique normalized word candidates.
 
         Args:
@@ -194,7 +199,9 @@ class Name(
         return tuple((node, word) for word in set(normalized))
 
     @staticmethod
-    def _label(node: GlobalDefinitionNode) -> str:  # pragma: no cover
+    def _label(
+        node: _types.GlobalDefinitionNode,
+    ) -> str:  # pragma: no cover
         """Return the human-readable declaration kind.
 
         Args:

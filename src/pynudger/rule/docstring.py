@@ -13,13 +13,13 @@ import typing
 
 import lintkit
 
+from pynudger import _types
 from pynudger._loader import Function
 
 if typing.TYPE_CHECKING:
     import collections.abc
 
-type FunctionNode = ast.FunctionDef | ast.AsyncFunctionDef
-type FunctionOwners = set[FunctionNode]
+type FunctionOwners = set[_types.FunctionNode]
 
 
 class Arguments(
@@ -31,7 +31,7 @@ class Arguments(
 
     def check(
         self,
-        function: lintkit.Value[FunctionNode],
+        function: lintkit.Value[_types.FunctionNode],
     ) -> bool:
         """Report functions missing an Args section.
 
@@ -71,7 +71,7 @@ class Arguments(
 
     def message(
         self,
-        _: lintkit.Value[ast.FunctionDef | ast.AsyncFunctionDef],
+        _: lintkit.Value[_types.FunctionNode],
     ) -> str:
         """Return missing Args section violation message.
 
@@ -101,15 +101,16 @@ class Arguments(
 
 class _Owner(
     lintkit.check.Check,
-    lintkit.loader.Python,
-    lintkit.rule.Node,
+    Function,
     abc.ABC,
 ):
     """Base rule matching docstring sections owned by functions."""
 
     @abc.abstractmethod
     def _predicate(
-        self, function: FunctionNode, owners: FunctionOwners
+        self,
+        function: _types.FunctionNode,
+        owners: FunctionOwners,
     ) -> bool:
         """Return whether a function is a section violation.
 
@@ -134,25 +135,10 @@ class _Owner(
             Function definitions requiring a docstring section.
 
         """
-        nodes_map: dict[type[ast.AST], list[ast.AST]] = self.getitem(
-            "nodes_map"
-        )
-        functions: list[FunctionNode] = [
-            function
-            for function in nodes_map[ast.FunctionDef]
-            + nodes_map[ast.AsyncFunctionDef]
-            if isinstance(function, ast.FunctionDef | ast.AsyncFunctionDef)
-        ]
-        yield_nodes: list[ast.Yield | ast.YieldFrom] = [
-            yield_node
-            for yield_node in nodes_map[ast.Yield] + nodes_map[ast.YieldFrom]
-            if isinstance(yield_node, ast.Yield | ast.YieldFrom)
-        ]
-        owners: FunctionOwners = {
-            self._owner(yield_node, functions) for yield_node in yield_nodes
-        }
+        tree: ast.Module = self.getitem("ast")
+        owners: FunctionOwners = set(_owners(tree))
 
-        for function in functions:
+        for function in self.nodes():
             if self._predicate(function, owners):
                 # Dummy value as check is always True
                 yield lintkit.Value.from_python(None, function)
@@ -173,58 +159,14 @@ class _Owner(
         """
         return True
 
-    def _owner(
-        self,
-        yield_node: ast.Yield | ast.YieldFrom,
-        functions: list[FunctionNode],
-    ) -> FunctionNode:
-        """Return the innermost function owning a yield expression.
-
-        This is necessary to infer whether our current function is
-        a generator expression or not.
-
-        Args:
-            yield_node:
-                Yield expression to locate within the parsed functions.
-            functions:
-                Function definitions that may contain the yield expression.
-
-        Returns:
-            Innermost function definition containing the yield expression.
-
-        """
-        yield_end_lineno = yield_node.end_lineno
-        yield_end_col_offset = yield_node.end_col_offset
-
-        containing = [
-            function
-            for function in functions
-            if function.end_lineno is not None
-            and function.end_col_offset is not None
-            if (
-                (function.lineno, function.col_offset)
-                <= (yield_node.lineno, yield_node.col_offset)
-                and (yield_end_lineno, yield_end_col_offset)
-                <= (
-                    function.end_lineno,
-                    function.end_col_offset,
-                )
-            )
-        ]
-        return min(
-            containing,
-            key=lambda function: (  # pyright: ignore[reportUnknownLambdaType]
-                function.end_lineno - function.lineno,  # pyright: ignore[reportOptionalOperand]
-                function.end_col_offset - function.col_offset,  # pyright: ignore[reportOptionalOperand]
-            ),
-        )
-
 
 class Yields(_Owner, code=35):
     """Rule checking missing Yields docstring sections."""
 
     def _predicate(
-        self, function: FunctionNode, owners: FunctionOwners
+        self,
+        function: _types.FunctionNode,
+        owners: FunctionOwners,
     ) -> bool:
         """Return whether a function misses a Yields section.
 
@@ -271,7 +213,9 @@ class Returns(_Owner, code=36):
     """Rule checking missing Returns docstring sections."""
 
     def _predicate(
-        self, function: FunctionNode, owners: FunctionOwners
+        self,
+        function: _types.FunctionNode,
+        owners: FunctionOwners,
     ) -> bool:
         """Return whether a function misses a Returns section.
 
@@ -320,3 +264,28 @@ class Returns(_Owner, code=36):
 
         """
         return self.description()
+
+
+def _owners(
+    node: ast.AST,
+    owner: _types.FunctionNode | None = None,
+) -> collections.abc.Iterable[_types.FunctionNode]:
+    """Yield the innermost function owning each yield expression.
+
+    Args:
+        node:
+            AST node whose children to traverse.
+        owner:
+            Innermost function containing the current node.
+
+    Yields:
+        Function owning each yield or yield-from expression.
+
+    """
+    if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
+        owner = node
+    if isinstance(node, ast.Yield | ast.YieldFrom) and owner is not None:
+        yield owner
+
+    for child in ast.iter_child_nodes(node):
+        yield from _owners(child, owner)

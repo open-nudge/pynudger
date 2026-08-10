@@ -11,7 +11,7 @@ from __future__ import annotations
 import typing
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import AsyncIterator, Iterator
 
 
 class DocstringExamples:
@@ -57,6 +57,26 @@ def generator() -> Iterator[int]:
 
     Yields:
         A sample value.
+
+    """
+    yield 1
+
+
+def delegated_generator() -> Iterator[int]:
+    """Delegate values to another iterable.
+
+    Yields:
+        Sample delegated values.
+
+    """
+    yield from (1, 2)
+
+
+async def async_generator() -> AsyncIterator[int]:
+    """Yield a value asynchronously.
+
+    Yields:
+        A sample asynchronous value.
 
     """
     yield 1

@@ -10,14 +10,14 @@ from __future__ import annotations
 import ast
 import typing
 
+from pynudger import _types
+
 if typing.TYPE_CHECKING:
     import collections.abc
 
-type Node = ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef
-
 
 def lines(
-    root: Node,
+    root: _types.Node,
     lines: list[str],
     docstring_nodes: collections.abc.Iterable[ast.AST] | None = None,
 ) -> int:
@@ -59,7 +59,7 @@ def lines(
 
 
 def _docstring_sizes(
-    root: Node,
+    root: _types.Node,
     lines: list[str],
     nodes: collections.abc.Iterable[ast.AST] | None = None,
 ) -> collections.abc.Iterator[int]:
@@ -81,9 +81,10 @@ def _docstring_sizes(
 
     """
     selected = ast.walk(root) if nodes is None else nodes
+    types = _types.to_ast(_types.Node)
     for child in selected:
         if (
-            isinstance(child, Node.__value__)
+            isinstance(child, types)
             and ast.get_docstring(child, clean=False) is not None  # pyright: ignore[reportArgumentType]
         ):
             docstring = child.body[0]  # pyright: ignore[reportAttributeAccessIssue]
