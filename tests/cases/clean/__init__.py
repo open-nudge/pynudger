@@ -3,10 +3,4 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Test a type above the default subscript depth limit."""
-
-# noqa-file: PYNUDGER46
-
-from __future__ import annotations
-
-items: dict[str, list[int]]
+"""Clean package initializer fixture."""

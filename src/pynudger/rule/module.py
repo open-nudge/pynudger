@@ -13,6 +13,7 @@ import typing
 import lintkit
 
 from pynudger import _types
+from pynudger._loader import GlobalDefinition
 from pynudger.rule import _code
 
 if typing.TYPE_CHECKING:
@@ -163,4 +164,73 @@ class CodeLines(
         return (
             f"Module has {value} code lines, "
             f"which exceeds the maximum of {self._max_module_code_lines()}."
+        )
+
+
+class Objects(
+    lintkit.check.Check,
+    GlobalDefinition,
+    code=46,
+):
+    """Rule checking Python modules with too few objects."""
+
+    def values(self) -> collections.abc.Iterable[lintkit.Value[int]]:
+        """Yield the number of objects in a Python module.
+
+        Yields:
+            Counted module objects for a non-initializer Python source file.
+
+        """
+        if self.file.resolve().name == "__init__.py":  # pyright: ignore[reportOptionalMemberAccess]
+            return
+        yield lintkit.Value(sum(1 for _ in super().nodes()))
+
+    def check(self, value: lintkit.Value[int]) -> bool:
+        """Report modules with too few objects.
+
+        Args:
+            value:
+                Counted objects for the loaded module.
+
+        Returns:
+            True if the object count is below the configured minimum,
+            False otherwise.
+
+        """
+        return value < self._minimum_objects()
+
+    def message(self, value: lintkit.Value[int]) -> str:
+        """Return a module-object violation message.
+
+        Args:
+            value:
+                Counted objects for the loaded module.
+
+        Returns:
+            Message describing the rule violation.
+
+        """
+        return (
+            f"Module has {value} objects, fewer than the minimum of "
+            f"{self._minimum_objects()}."
+        )
+
+    def description(self) -> str:
+        """Return rule description.
+
+        Returns:
+            Description of the rule.
+
+        """
+        return "Avoid modules with fewer than the configured number of objects."
+
+    def _minimum_objects(self) -> int:
+        """Return the configured minimum number of module objects.
+
+        Returns:
+            Minimum required module object count.
+
+        """
+        return self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
+            "minimum_module_objects", 3
         )

@@ -5,6 +5,8 @@
 
 """Module testing multiple assert rule violations."""
 
+# noqa-file: PYNUDGER46
+
 from __future__ import annotations
 
 

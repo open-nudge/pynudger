@@ -5,6 +5,8 @@
 
 """Test a pipe type union above the default member limit."""
 
+# noqa-file: PYNUDGER46
+
 from __future__ import annotations
 
 type Combined = int | str | bytes | float

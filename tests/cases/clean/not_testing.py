@@ -5,6 +5,8 @@
 
 """Module testing clean assert rule behavior."""
 
+# noqa-file: PYNUDGER46
+
 from __future__ import annotations
 
 
