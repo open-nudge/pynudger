@@ -5,6 +5,8 @@
 
 """Tests no accidental keyword-based violations."""
 
+# noqa-file: PYNUDGER46
+
 from __future__ import annotations
 
 

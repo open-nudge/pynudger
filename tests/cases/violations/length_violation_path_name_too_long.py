@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """Tests for length violations."""
-# noqa-file: PYNUDGER43
+# noqa-file: PYNUDGER43, PYNUDGER46
 
 from __future__ import annotations
 

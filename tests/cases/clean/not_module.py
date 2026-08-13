@@ -24,7 +24,7 @@ class MyClass:
     """
 
 
-values = [
+values = entries = [
     1,
     2,
     3,

@@ -5,6 +5,8 @@
 
 """Test attribute rules violations."""
 
+# noqa-file: PYNUDGER46
+
 from __future__ import annotations
 
 import typing
