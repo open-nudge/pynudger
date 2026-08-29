@@ -196,18 +196,6 @@
         "dependency-groups"
       ],
       "matchPackageNames": [
-        "semgrep"
-      ],
-      "groupName": "dependencies (dev-security)"
-    },
-    {
-      "matchManagers": [
-        "pep621"
-      ],
-      "matchDepTypes": [
-        "dependency-groups"
-      ],
-      "matchPackageNames": [
         "zizmor",
         "check-jsonschema"
       ],

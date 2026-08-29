@@ -108,10 +108,8 @@ for example:
 
 ```toml
 [tool.pynudger]
-# include rules by their code
-include_codes = [1, 2, 5] # default: all rules included
-# exclude rules by their code (takes precedence over include)
-exclude_codes = [4, 5, 6] # default: no rules excluded
+# select rules by their full, case-sensitive names
+names = ["PYNUDGER0", "PYNUDGER1", "PYNUDGER5"] # default: all rules
 # whether to exit after first error or all errors
 end_mode = "first" # default: "all"
 ```
