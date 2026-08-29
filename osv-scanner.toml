@@ -978,12 +978,6 @@ reason = "dev dependency"
 
 [[PackageOverrides]]
 ecosystem = "PyPI"
-name = "semgrep"
-license.ignore = true
-reason = "dev dependency"
-
-[[PackageOverrides]]
-ecosystem = "PyPI"
 name = "setuptools"
 license.ignore = true
 reason = "dev dependency"

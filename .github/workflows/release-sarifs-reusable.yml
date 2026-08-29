@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -20,10 +20,9 @@ jobs:
   sarif-osv-scanner:
     permissions:
       # Required to upload SARIF file to CodeQL.
-      # See: https://github.com/github/codeql-action/issues/2117
-      actions: "read"
+      actions: "read" # See: https://github.com/github/codeql-action/issues/2117
       # Require writing security events to upload SARIF file to security tab
-      security-events: "write"
+      security-events: "write" # writing security events
       # Only need to read contents
       contents: "read"
     name: "Sarif OSV-Scanner"
@@ -37,10 +36,9 @@ jobs:
   sarif-semgrep:
     permissions:
       # Required to upload SARIF file to CodeQL.
-      # See: https://github.com/github/codeql-action/issues/2117
-      actions: "read"
+      actions: "read" # See: https://github.com/github/codeql-action/issues/2117
       # Require writing security events to upload SARIF file to security tab
-      security-events: "write"
+      security-events: "write" # writing security events
       # Only need to read contents
       contents: "read"
     name: "Sarif Semgrep"
@@ -50,4 +48,5 @@ jobs:
     with:
       name: "semgrep-${{ github.sha }}"
       file: "semgrep-${{ github.sha }}.sarif"
+      sarif: true
 ...

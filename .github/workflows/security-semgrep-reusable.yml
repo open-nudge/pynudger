@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 open-nudge <https://github.com/open-nudge>
+# SPDX-FileCopyrightText: © 2025, 2026 open-nudge <https://github.com/open-nudge>
 # SPDX-FileContributor: szymonmaszke <github@maszke.co>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -35,10 +35,9 @@ jobs:
     runs-on: "ubuntu-latest"
     permissions:
       # Required to upload SARIF file to CodeQL.
-      # See: https://github.com/github/codeql-action/issues/2117
-      actions: "read"
-      # Writing security events to upload SARIF file to security tab
-      security-events: "write"
+      actions: "read" # See: https://github.com/github/codeql-action/issues/2117
+      # Require writing security events to upload SARIF file to security tab
+      security-events: "write" # writing security events
       # Only need to read contents
       contents: "read"
     steps:
@@ -47,17 +46,16 @@ jobs:
         uses: "step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0" # v2.12.0
         # yamllint enable rule:line-length
         with:
-          disable-sudo-and-containers: true
+          # Container support is required for the Semgrep action.
+          disable-sudo: true
           egress-policy: "block"
           allowed-endpoints: >
             api.github.com:443
-            files.pythonhosted.org:443
+            auth.docker.io:443
             github.com:443
-            pdm-project.org:443
-            pdm.fming.dev:443
-            pypi.org:443
-            raw.githubusercontent.com:443
             objects.githubusercontent.com:443
+            production.cloudflare.docker.com:443
+            registry-1.docker.io:443
             semgrep.dev:443
       - name: "Checkout repository"
         # yamllint disable rule:line-length
@@ -66,23 +64,31 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Setup PDM"
-        # yamllint disable rule:line-length
-        uses: "open-nudge/opentemplate/.github/actions/pdm-setup@main" # zizmor: ignore[unpinned-uses]
-        # yamllint enable rule:line-length
-        with:
-          # Sigstore, python-semantic-release etc.
-          group: "security"
-      - name: "PDM Compatibility"
-        # yamllint disable rule:line-length
-        uses: "open-nudge/opentemplate/.github/actions/pdm-compatibility@main" # zizmor: ignore[unpinned-uses]
-        # yamllint enable rule:line-length
-
       - name: "Run Semgrep"
-        env:
-          SEMGREP_FILE: "${{ inputs.file }}"
-        run: >
-          pdm run check-security --sarif-output="${SEMGREP_FILE}"
+        # yamllint disable rule:line-length
+        uses: "docker://semgrep/semgrep:1.174.0@sha256:f1f7b71861c7b28b6e0f661225a2c4f58a484f5d0f182465c6d6b3b22f972ade"
+        # yamllint enable rule:line-length
+        # Keep these arguments aligned with the hook scan in
+        # .pre-commit-config.yaml.
+        with:
+          entrypoint: "semgrep"
+          args: >-
+            scan
+            --experimental
+            --exclude=*pdm.lock
+            --config=p/python
+            --config=p/secrets
+            --config=p/security-audit
+            --config=p/ci
+            --config=p/github-actions
+            --config=p/bandit
+            --config=p/gitleaks
+            --error
+            --metrics=off
+            --severity=INFO
+            --strict
+            --sarif-output="${{ inputs.file }}"
+            .
       - name: "Upload files"
         # yamllint disable rule:line-length
         uses: "open-nudge/opentemplate/.github/actions/sarif-upload@main" # zizmor: ignore[unpinned-uses]
