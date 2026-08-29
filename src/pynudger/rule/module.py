@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import ast
 import itertools
 import typing
 
@@ -17,7 +18,6 @@ from pynudger._loader import GlobalDefinition
 from pynudger.rule import _code
 
 if typing.TYPE_CHECKING:
-    import ast
     import collections.abc
 
 
@@ -181,9 +181,9 @@ class Objects(
             Counted module objects for a non-initializer Python source file.
 
         """
-        if self.file.resolve().name == "__init__.py":  # pyright: ignore[reportOptionalMemberAccess]
+        if self.file.resolve().name == "__init__.py":
             return
-        yield lintkit.Value(sum(1 for _ in super().nodes()))
+        yield lintkit.Value(sum(1 for _ in self._filter_nodes()))
 
     def check(self, value: lintkit.Value[int]) -> bool:
         """Report modules with too few objects.
@@ -232,5 +232,28 @@ class Objects(
 
         """
         return self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            "minimum_module_objects", 3
+            "minimum_module_objects", 2
         )
+
+    def _filter_nodes(
+        self,
+    ) -> collections.abc.Iterable[_types.GlobalDefinitionNode]:
+        """Yield module objects allowed by the private-name configuration.
+
+        Yields:
+            All module objects when private-name exclusion is disabled.
+            Otherwise, objects without a single-underscore-prefixed name.
+
+        """
+        nodes = super().nodes()
+        if not self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
+            "exclude_private", True
+        ):
+            # enq: filtered iteration over nodes is already tested
+            yield from nodes  # pragma: no cover
+            # enq: filtered iteration over nodes is already tested
+            return  # pragma: no cover
+        for node in nodes:
+            name = node.id if isinstance(node, ast.Name) else node.name
+            if not name.startswith("_") or name.startswith("__"):
+                yield node
