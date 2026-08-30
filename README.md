@@ -83,6 +83,9 @@ naming conventions and making your code "more Pythonic".
 > pip install pynudger
 ```
 
+Install `pynudger[rich]` for rich output, `pynudger[mcp]` for the MCP
+command, or `pynudger[all]` for both.
+
 ### Usage
 
 To check against the rules run the following from the command line:
@@ -95,7 +98,7 @@ You can pass additional arguments to `pynudger check`, like files
 to check (by default all Python files in the current directory):
 
 ```sh
-> pynudger check path/to/file.py another_file.py
+> pynudger check path/to/package single.py
 ```
 
 ## Advanced
