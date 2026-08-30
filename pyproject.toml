@@ -71,8 +71,19 @@ dynamic = [ "version" ]
 ###############################################################################
 
 dependencies = [
-  "lintkit[rich]>=3.0.0",
+  "lintkit>=3.0.0",
   "loadfig>=0.1.0",
+]
+
+optional-dependencies.rich = [
+  "lintkit[rich]>=3.0.0",
+]
+optional-dependencies.mcp = [
+  "lintkit[mcp]>=3.0.0",
+]
+optional-dependencies.all = [
+  "lintkit[rich]",
+  "lintkit[mcp]",
 ]
 
 urls.Changelog = "https://github.com/open-nudge/pynudger/blob/master/CHANGELOG.md"

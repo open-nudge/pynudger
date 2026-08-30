@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import pathlib
+import sys
 import typing
 
 from importlib.metadata import version
@@ -26,15 +27,21 @@ lintkit.settings.name = NAME.upper()
 from pynudger import rule as rule  # noqa: E402, PLC0414
 
 
-def _files_default(
-    config: dict[str, typing.Any], path: pathlib.Path | str | None = None
+def _files(
+    config: dict[str, typing.Any],
+    paths: Iterable[pathlib.Path | str],
 ) -> Iterable[pathlib.Path]:
-    """Default files to lint.
+    """Expand files and directories into a unique sequence of files.
 
-    Returns:
-        All Python files in the current working directory and its
-        subdirectories, excluding some well-known directories like
-        `__pypackages__`.
+    Args:
+        config:
+            Pynudger configuration containing directory ignore settings.
+        paths:
+            Files and directories to expand in their given order.
+
+    Yields:
+        Explicit files and Python files found recursively in directories,
+        deduplicated by their resolved paths.
 
     """
     ignores = set(
@@ -43,17 +50,39 @@ def _files_default(
         )
     ) | set(config.get("extend_dir_ignores", []))
 
-    # Both no covers were tested previously, too cumbersome
-    # to test these explicitly
+    seen: set[pathlib.Path] = set()
+    for path in paths:
+        resolved = pathlib.Path(path).resolve()
+        directory = resolved.is_dir()
+        candidates = resolved.rglob("*.py") if directory else (resolved,)
 
-    if path is None:  # pragma: no cover
-        path = pathlib.Path.cwd()
+        for candidate in candidates:
+            canonical = candidate.resolve()
+            if not (  # pragma: no branch
+                (directory and not ignores.isdisjoint(canonical.parts))
+                or canonical in seen
+            ):
+                seen.add(canonical)
+                yield canonical
 
-    path = pathlib.Path(path).resolve()
 
-    for p in path.rglob("*.py"):
-        if ignores.isdisjoint(p.parts):  # pragma: no cover
-            yield p
+def _files_default(
+    config: dict[str, typing.Any], path: pathlib.Path | str | None = None
+) -> Iterable[pathlib.Path]:
+    """Find the default files to lint.
+
+    Args:
+        config:
+            Pynudger configuration containing directory ignore settings.
+        path:
+            Directory to search, or the current working directory by default.
+
+    Returns:
+        Python files below the selected directory, excluding ignored
+        directories.
+
+    """
+    return _files(config, (pathlib.Path.cwd() if path is None else path,))
 
 
 def main(
@@ -79,6 +108,13 @@ def main(
     if names is None:  # pragma: no cover
         names = config.get("names")
 
+    selected_args = sys.argv[1:] if args is None else args
+    if selected_args[:1] == ["check"]:
+        selected_args = [
+            "check",
+            *(str(file) for file in _files(config, selected_args[1:])),
+        ]
+
     lintkit.cli.main(
         version=version(NAME),
         files_default=_files_default(config, path),
@@ -87,6 +123,6 @@ def main(
         ),
         names=names,
         end_mode=config.get("end_mode", "all"),
-        args=args,
+        args=selected_args,
         description="pynudger - opennudge Python linter",
     )
