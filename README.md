@@ -259,9 +259,6 @@ or `.pynudger.toml`):
 | `dir_ignores`                      | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
 | `extend_dir_ignores`               | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
 
-`PYNUDGER46` excludes single-underscore-prefixed objects by default and does
-not check package `__init__.py` files.
-
 ## Contribute
 
 <!-- md-dead-link-check: off -->
