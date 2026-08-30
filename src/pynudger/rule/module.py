@@ -15,7 +15,7 @@ import lintkit
 
 from pynudger import _types
 from pynudger._loader import GlobalDefinition
-from pynudger.rule import _code
+from pynudger.rule import _code, _words
 
 if typing.TYPE_CHECKING:
     import collections.abc
@@ -183,7 +183,35 @@ class Objects(
         """
         if self.file.resolve().name == "__init__.py":
             return
-        yield lintkit.Value(sum(1 for _ in self._filter_nodes()))
+
+        module = self.file.resolve().stem
+        module_words = (
+            tuple(word.casefold() for word in _words.snake(module[1:]))
+            if module.startswith("_") and not module.startswith("__")
+            else ()
+        )
+        exclude_private = self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
+            "exclude_private", True
+        )
+        count = 0
+
+        for node in super().nodes():
+            name = node.id if isinstance(node, ast.Name) else node.name
+            if module_words and not name.startswith("_"):
+                words = (
+                    _words.pascal(name)
+                    if isinstance(node, ast.ClassDef)
+                    else _words.snake(name)
+                )
+                if module_words == tuple(word.casefold() for word in words):
+                    return
+            if (
+                not exclude_private
+                or not name.startswith("_")
+                or name.startswith("__")
+            ):
+                count += 1
+        yield lintkit.Value(count)
 
     def check(self, value: lintkit.Value[int]) -> bool:
         """Report modules with too few objects.
@@ -234,26 +262,3 @@ class Objects(
         return self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
             "minimum_module_objects", 2
         )
-
-    def _filter_nodes(
-        self,
-    ) -> collections.abc.Iterable[_types.GlobalDefinitionNode]:
-        """Yield module objects allowed by the private-name configuration.
-
-        Yields:
-            All module objects when private-name exclusion is disabled.
-            Otherwise, objects without a single-underscore-prefixed name.
-
-        """
-        nodes = super().nodes()
-        if not self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            "exclude_private", True
-        ):
-            # enq: filtered iteration over nodes is already tested
-            yield from nodes  # pragma: no cover
-            # enq: filtered iteration over nodes is already tested
-            return  # pragma: no cover
-        for node in nodes:
-            name = node.id if isinstance(node, ast.Name) else node.name
-            if not name.startswith("_") or name.startswith("__"):
-                yield node
