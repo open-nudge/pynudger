@@ -19,7 +19,6 @@ from pynudger._loader import (
     Class,
     Function,
     GlobalDefinition,
-    Variable,
 )
 from pynudger.rule import _words
 
@@ -76,10 +75,21 @@ class _Repetition(lintkit.check.Check):
         return f"Avoid repeating module name in {self.kind}."
 
 
-class RepetitionVariable(_Repetition, Variable, code=40):
-    """Rule checking variable binding names in all scopes."""
+class RepetitionVariable(_Repetition, GlobalDefinition, code=40):
+    """Rule checking module-scope variable binding names."""
 
     kind: typing.ClassVar[str] = "variable"
+
+    def values(self) -> collections.abc.Iterable[lintkit.Value[str]]:
+        """Yield module-scope variable binding names.
+
+        Yields:
+            Variable identifiers with their declaration locations.
+
+        """
+        for node in super().nodes():
+            if isinstance(node, ast.Name):
+                yield lintkit.Value.from_python(node.id, node)
 
 
 class RepetitionClass(_Repetition, Class, code=41):

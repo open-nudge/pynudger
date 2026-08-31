@@ -66,35 +66,6 @@ class _Definition(lintkit.loader.Python, lintkit.rule.Node, abc.ABC):
 # Concrete loaders
 
 
-class Variable(_Definition, abc.ABC):
-    """Loader for variable binding names."""
-
-    def nodes(self) -> collections.abc.Iterable[ast.Name]:
-        """Yield names bound by store operations in all scopes.
-
-        Yields:
-            ``ast.Name`` nodes with ``ast.Store`` context.
-
-        """
-        data: list[ast.Name] = self.getitem("nodes_map")[ast.Name]
-        for node in data:
-            if isinstance(node.ctx, ast.Store):
-                yield node
-
-    def unpack(self, node: ast.Name) -> str:
-        """Extract the value from a node.
-
-        Args:
-            node:
-                The AST node to extract the value from.
-
-        Returns:
-            The value loaded from the node.
-
-        """
-        return node.id
-
-
 class Class(_Definition, abc.ABC):
     """Loader for class definitions."""
 
@@ -260,4 +231,4 @@ class Path(lintkit.loader.File, lintkit.rule.Node, abc.ABC):
             The file path as a value
         """
         # enq: lintkit framework assures self.file is not None at this point
-        yield lintkit.Value(str(self.file.stem))  # pyright: ignore[reportOptionalMemberAccess]
+        yield lintkit.Value(str(self.file.stem))
