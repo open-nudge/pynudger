@@ -15,7 +15,7 @@ values = [1]
 class NotRepetition:
     """Use the exact same module name."""
 
-    read_not_same_name: int = 1
+    read_not_repetition: int = 1
 
 
 def not_repetition() -> None:
@@ -33,9 +33,9 @@ def wrapper(values: list[int]) -> None:
         values:
             Values to iterate over.
     """
-    read_not_same_name = values[0]
-    for read_not_same_name in values:
-        _ = read_not_same_name
+    not_repetition = values[0]
+    for not_repetition in values:
+        _ = not_repetition
 
 
 for read_not_same_name in values:
