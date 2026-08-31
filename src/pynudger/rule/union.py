@@ -78,7 +78,7 @@ class Union(lintkit.check.Check, Type, code=44):
             Maximum allowed member count.
 
         """
-        return self.config.get("max_union_types", 3)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config("max_union_types", 3)
 
 
 def _unions(

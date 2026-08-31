@@ -31,7 +31,7 @@ class AssertCount(
             Assert statements inside matching test functions.
 
         """
-        path = self.file.resolve()  # pyright: ignore[reportOptionalMemberAccess]
+        path = self.file.resolve()
         if not path.name.startswith("test") and not path.stem.endswith("test"):
             return
 
@@ -66,7 +66,7 @@ class AssertCount(
             Maximum number of allowed asserts in test cases.
             Default: 1
         """
-        return self.config.get("maximum_test_asserts", 1)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config("maximum_test_asserts", 1)
 
     def description(self) -> str:
         """Return rule description.

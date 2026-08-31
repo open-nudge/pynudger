@@ -59,7 +59,7 @@ class Lines(
         Returns:
             The maximum number of lines allowed in a module.
         """
-        return self.config.get("max_module_lines", 600)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config("max_module_lines", 600)
 
     def description(self) -> str:
         """Return rule description.
@@ -135,7 +135,7 @@ class CodeLines(
         Returns:
             The maximum number of code lines allowed in a module.
         """
-        return self.config.get("max_module_code_lines", 200)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config("max_module_code_lines", 200)
 
     def description(self) -> str:
         """Return rule description.
@@ -190,9 +190,7 @@ class Objects(
             if module.startswith("_") and not module.startswith("__")
             else ()
         )
-        exclude_private = self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            "exclude_private", True
-        )
+        exclude_private = self.config("exclude_private", default=True)
         count = 0
 
         for node in super().nodes():
@@ -259,6 +257,4 @@ class Objects(
             Minimum required module object count.
 
         """
-        return self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            "minimum_module_objects", 2
-        )
+        return self.config("minimum_module_objects", 2)

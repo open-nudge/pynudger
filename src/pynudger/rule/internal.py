@@ -98,12 +98,8 @@ class _Internal(
             A ``(minimum_usages, minimum_lines)`` tuple. Missing configuration
             values default to two usages and five code lines.
         """
-        minimum_usages = self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            f"minimum_internal_{self.kind}_usages", 2
-        )
-        minimum_lines = self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            f"minimum_internal_{self.kind}_lines", 5
-        )
+        minimum_usages = self.config(f"minimum_internal_{self.kind}_usages", 2)
+        minimum_lines = self.config(f"minimum_internal_{self.kind}_lines", 5)
         return minimum_usages, minimum_lines
 
 

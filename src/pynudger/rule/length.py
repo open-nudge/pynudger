@@ -33,7 +33,7 @@ class _Length(lintkit.check.Check, abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def _words(self, value: str) -> list[str]:
+    def _words(self, value: lintkit.Value[str]) -> list[str]:
         """Divide string into words as defined by concrete class.
 
         Returns:
@@ -55,8 +55,9 @@ class _Length(lintkit.check.Check, abc.ABC):
 
         """
         words = self._words(value)
-        to_exclude: list[str] = self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
-            f"{self._variable()}_excludes", []
+        to_exclude: list[str] = self.config(  # pyright: ignore[reportAttributeAccessIssue]
+            f"{self._variable()}_excludes",
+            [],
         )
         for word in to_exclude:
             if word.lower() in words:  # pragma: no cover
@@ -71,7 +72,10 @@ class _Length(lintkit.check.Check, abc.ABC):
             Length limit
 
         """
-        return self.config.get(f"{self._variable()}_length", 3)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config(  # pyright: ignore[reportAttributeAccessIssue]
+            f"{self._variable()}_length",
+            3,
+        )
 
     def message(self, value: lintkit.Value[str]) -> str:
         """Display error message in case of rule violation.
