@@ -76,7 +76,7 @@ class Depth(lintkit.check.Check, Type, code=45):
             Maximum allowed nested subscript depth.
 
         """
-        return self.config.get("max_type_depth", 1)  # pyright: ignore[reportAttributeAccessIssue]
+        return self.config("max_type_depth", 1)
 
 
 def _depth(node: ast.AST) -> int:

@@ -105,16 +105,13 @@ to check (by default all Python files in the current directory):
 
 ### Configuration
 
-You can configure pynudger in `pyproject.toml` (or `.pynudger.toml`
-in the root of your project, just remove the `[tool.pynudger]` section),
-for example:
+You can configure individual pynudger rules in `pyproject.toml` (or
+`.pynudger.toml` in the root of your project, just remove the
+`[tool.pynudger]` prefix), for example:
 
 ```toml
-[tool.pynudger]
-# select rules by their full, case-sensitive names
-names = ["PYNUDGER0", "PYNUDGER1", "PYNUDGER5"] # default: all rules
-# whether to exit after first error or all errors
-end_mode = "first" # default: "all"
+[tool.pynudger.PYNUDGER44]
+max_union_types = 4
 ```
 
 > [!TIP]
@@ -236,28 +233,26 @@ by placing the following somewhere in the file (preferably at the top):
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 
-| Option                             | Description                                                           | Affected rules         | Default                                                    |
-| ---------------------------------- | --------------------------------------------------------------------- | ---------------------- | ---------------------------------------------------------- |
-| `pascal_length`                    | Maximum allowed length of PascalCase names                            | PYNUDGER18             | 3                                                          |
-| `snake_length`                     | Maximum allowed length of snake_case names                            | PYNUDGER19, PYNUDGER20 | 3                                                          |
-| `pascal_excludes`                  | List of words to exclude from PascalCase length check                 | PYNUDGER18             | []                                                         |
-| `snake_excludes`                   | List of words to exclude from snake_case length check                 | PYNUDGER19, PYNUDGER20 | []                                                         |
-| `maximum_test_asserts`             | Maximum number of `assert` statements in pytest tests                 | PYNUDGER31             | 1                                                          |
-| `max_module_lines`                 | Maximum number of **any** lines in a Python module                    | PYNUDGER32             | 600                                                        |
-| `max_module_code_lines`            | Maximum number of **code** lines in a Python module                   | PYNUDGER33             | 200                                                        |
-| `minimum_module_objects`           | Minimum assignment names, classes, and functions in a module          | PYNUDGER46             | 2                                                          |
-| `exclude_private`                  | Exclude objects whose names start with a single underscore            | PYNUDGER46             | True                                                       |
-| `minimum_internal_function_usages` | Minimum same-file usages for internal functions                       | PYNUDGER37             | 2                                                          |
-| `minimum_internal_function_lines`  | Minimum code lines for internal functions                             | PYNUDGER37             | 5                                                          |
-| `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                         | PYNUDGER38             | 2                                                          |
-| `minimum_internal_class_lines`     | Minimum code lines for internal classes                               | PYNUDGER38             | 5                                                          |
-| `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                         | PYNUDGER39             | 2                                                          |
-| `minimum_internal_method_lines`    | Minimum code lines for internal methods                               | PYNUDGER39             | 5                                                          |
-| `minimum_same_name_occurrences`    | Minimum declarations sharing a name word                              | PYNUDGER43             | 2                                                          |
-| `max_union_types`                  | Maximum members in a pipe type union                                  | PYNUDGER44             | 3                                                          |
-| `max_type_depth`                   | Maximum nested type subscript depth                                   | PYNUDGER45             | 1                                                          |
-| `dir_ignores`                      | List of (sub)directories to be excluded in case no files are provided | __ALL__                | ["\_\_pypackages\_\_", ".venv", ".git", "\_\_pycache\_\_"] |
-| `extend_dir_ignores`               | Additional (sub)directories to ignore, extending the default ignores  | __ALL__                | []                                                         |
+| Option                             | Description                                                  | Affected rules         | Default |
+| ---------------------------------- | ------------------------------------------------------------ | ---------------------- | ------- |
+| `pascal_length`                    | Maximum allowed length of PascalCase names                   | PYNUDGER18             | 3       |
+| `snake_length`                     | Maximum allowed length of snake_case names                   | PYNUDGER19, PYNUDGER20 | 3       |
+| `pascal_excludes`                  | List of words to exclude from PascalCase length check        | PYNUDGER18             | []      |
+| `snake_excludes`                   | List of words to exclude from snake_case length check        | PYNUDGER19, PYNUDGER20 | []      |
+| `maximum_test_asserts`             | Maximum number of `assert` statements in pytest tests        | PYNUDGER31             | 1       |
+| `max_module_lines`                 | Maximum number of **any** lines in a Python module           | PYNUDGER32             | 600     |
+| `max_module_code_lines`            | Maximum number of **code** lines in a Python module          | PYNUDGER33             | 200     |
+| `minimum_module_objects`           | Minimum assignment names, classes, and functions in a module | PYNUDGER46             | 2       |
+| `exclude_private`                  | Exclude objects whose names start with a single underscore   | PYNUDGER46             | True    |
+| `minimum_internal_function_usages` | Minimum same-file usages for internal functions              | PYNUDGER37             | 2       |
+| `minimum_internal_function_lines`  | Minimum code lines for internal functions                    | PYNUDGER37             | 5       |
+| `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                | PYNUDGER38             | 2       |
+| `minimum_internal_class_lines`     | Minimum code lines for internal classes                      | PYNUDGER38             | 5       |
+| `minimum_internal_method_usages`   | Minimum same-file usages for internal methods                | PYNUDGER39             | 2       |
+| `minimum_internal_method_lines`    | Minimum code lines for internal methods                      | PYNUDGER39             | 5       |
+| `minimum_same_name_occurrences`    | Minimum declarations sharing a name word                     | PYNUDGER43             | 2       |
+| `max_union_types`                  | Maximum members in a pipe type union                         | PYNUDGER44             | 3       |
+| `max_type_depth`                   | Maximum nested type subscript depth                          | PYNUDGER45             | 1       |
 
 ## Contribute
 

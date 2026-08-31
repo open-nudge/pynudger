@@ -158,7 +158,7 @@ class Name(
             Whether the candidate reaches the configured minimum.
 
         """
-        return value.occurrences >= self.config.get(  # pyright: ignore[reportAttributeAccessIssue]
+        return value.occurrences >= self.config(
             "minimum_same_name_occurrences", 2
         )
 
