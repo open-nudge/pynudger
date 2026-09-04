@@ -45,7 +45,7 @@ def test_rules(
     except SystemExit:
         out, _ = capsys.readouterr()
         for i in lintkit.registry.codes():
-            rule = f"{lintkit.settings.name}{i} "
+            rule = f"{lintkit.settings.name.rule}{i} "
             if not clean:
                 # Check a single violation is returned to make sure
                 # each violation was not accidentally created

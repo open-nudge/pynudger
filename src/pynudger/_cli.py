@@ -23,7 +23,8 @@ IGNORED_DIRECTORIES = frozenset(
     {"__pypackages__", ".venv", ".git", "__pycache__"}
 )
 
-lintkit.settings.name = NAME.upper()
+lintkit.settings.name.tool = NAME
+lintkit.settings.name.rule = NAME.upper()
 
 # Import all rule modules to register lintkit rules (side effect).
 from pynudger import rule as rule  # noqa: E402, PLC0414
