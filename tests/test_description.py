@@ -42,6 +42,6 @@ def test_rules(
     except SystemExit:
         out, _ = capsys.readouterr()
         for i in lintkit.registry.codes():
-            name = f"{lintkit.settings.name}{i}"
+            name = f"{lintkit.settings.name.rule}{i}"
             # nosemgrep
             assert out.count(f"{name} ") == int(names is None or name in names)
