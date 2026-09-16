@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-values = entries = [
+values = [
     1,
     2,
     3,

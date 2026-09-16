@@ -7,7 +7,13 @@
 
 from __future__ import annotations
 
-_helper = 0
+
+def _somename() -> None:
+    """Expose a private object matching the module name."""
+
+
+_somename()
+_somename()
 
 
 def files() -> None:

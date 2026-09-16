@@ -190,7 +190,7 @@ class Objects(
             if module.startswith("_") and not module.startswith("__")
             else ()
         )
-        exclude_private = self.config("exclude_private", default=True)
+        exclude_private = self.config("exclude_private", default=False)
         count = 0
 
         for node in super().nodes():
@@ -207,7 +207,7 @@ class Objects(
                 not exclude_private
                 or not name.startswith("_")
                 or name.startswith("__")
-            ):
+            ):  # pragma: no branch
                 count += 1
         yield lintkit.Value(count)
 

@@ -243,7 +243,7 @@ or `.pynudger.toml`):
 | `max_module_lines`                 | Maximum number of **any** lines in a Python module           | PYNUDGER32             | 600     |
 | `max_module_code_lines`            | Maximum number of **code** lines in a Python module          | PYNUDGER33             | 200     |
 | `minimum_module_objects`           | Minimum assignment names, classes, and functions in a module | PYNUDGER46             | 2       |
-| `exclude_private`                  | Exclude objects whose names start with a single underscore   | PYNUDGER46             | True    |
+| `exclude_private`                  | Exclude objects whose names start with a single underscore   | PYNUDGER46             | False   |
 | `minimum_internal_function_usages` | Minimum same-file usages for internal functions              | PYNUDGER37             | 2       |
 | `minimum_internal_function_lines`  | Minimum code lines for internal functions                    | PYNUDGER37             | 5       |
 | `minimum_internal_class_usages`    | Minimum same-file usages for internal classes                | PYNUDGER38             | 2       |
