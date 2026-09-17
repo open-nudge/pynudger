@@ -211,7 +211,7 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER26` | Avoid restricted insecure builtin functions: exec, eval, compile.                                        |
 | `PYNUDGER27` | Avoid restricted explicit iteration: iter, aiter, anext, next.                                           |
 | `PYNUDGER28` | Avoid restricted attribute manipulation: delattr, getattr, hasattr, setattr, globals, locals, vars, dir. |
-| `PYNUDGER29` | Avoid restricted explicit dunder access: attributes starting with `__`.                                  |
+| `PYNUDGER29` | Avoid explicit dunder access (attributes starting with `__`) except directly through `super(...)`.       |
 | `PYNUDGER30` | Avoid returning empty strings. Return None to indicate lack of value.                                    |
 | `PYNUDGER31` | Avoid more than <N> assert statements in pytest tests. Keep each test focused.                           |
 | `PYNUDGER32` | Avoid modules with more than <N> **total** lines. Split code into focused modules.                       |
