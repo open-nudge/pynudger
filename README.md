@@ -230,6 +230,8 @@ by placing the following somewhere in the file (preferably at the top):
 | `PYNUDGER45` | Avoid deeply nested types.                                                                               |
 | `PYNUDGER46` | Avoid modules with fewer than <N> objects. Move them into other modules.                                 |
 
+PYNUDGER18, PYNUDGER41, and PYNUDGER43 ignore the `Error` class-name suffix.
+
 with the following configurable options (in `pyproject.toml`
 or `.pynudger.toml`):
 

@@ -243,5 +243,5 @@ def _split(kind: str, value: str | lintkit.Value[str]) -> list[str]:
 
     """
     if kind == "class":
-        return _words.pascal(value)
+        return [word for word in _words.pascal(value) if word != "Error"]
     return _words.snake(value)

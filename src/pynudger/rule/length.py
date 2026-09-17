@@ -121,7 +121,7 @@ class _Pascal(_Length):
             List of words
 
         """
-        return _words.pascal(value)
+        return [word for word in _words.pascal(value) if word != "Error"]
 
 
 class _Snake(_Length):
