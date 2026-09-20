@@ -13,6 +13,7 @@ as done by `lintkit`.
 from __future__ import annotations
 
 from pynudger.rule import (
+    assignment,
     attribute,
     call,
     common,
@@ -34,6 +35,7 @@ from pynudger.rule import (
 )
 
 __all__ = [
+    "assignment",
     "attribute",
     "call",
     "common",

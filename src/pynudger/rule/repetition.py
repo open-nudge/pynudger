@@ -8,9 +8,6 @@
 from __future__ import annotations
 
 import ast
-import collections
-import collections.abc
-import dataclasses
 import typing
 
 import lintkit
@@ -20,16 +17,16 @@ from pynudger._loader import (
     Function,
     GlobalDefinition,
 )
-from pynudger.rule import _words
+from pynudger.rule import _constant
 
 if typing.TYPE_CHECKING:
-    from pynudger import _types
+    import collections.abc
 
 
 class _Repetition(lintkit.check.Check):
     """Share matching and diagnostics for repeated module names."""
 
-    kind: typing.ClassVar[str]
+    kind: typing.ClassVar[_constant.Kind]
 
     def check(self, value: lintkit.Value[str]) -> bool:
         """Report identifiers containing the module name as complete words.
@@ -44,7 +41,13 @@ class _Repetition(lintkit.check.Check):
         """
         module_name = self.file.resolve().stem  # pyright: ignore[reportAttributeAccessIssue]
         identifier = "_".join(
-            word.casefold() for word in _split(self.kind, value)
+            word.casefold()
+            for word in self.kind.words(
+                value,
+                remove_suffix=_constant.Suffix.ERROR
+                if self.kind.is_class()
+                else None,
+            )
         )
         return (
             module_name != identifier
@@ -78,7 +81,7 @@ class _Repetition(lintkit.check.Check):
 class RepetitionVariable(_Repetition, GlobalDefinition, code=40):
     """Rule checking module-scope variable binding names."""
 
-    kind: typing.ClassVar[str] = "variable"
+    kind: typing.ClassVar[_constant.Kind] = _constant.Kind.VARIABLE
 
     def values(self) -> collections.abc.Iterable[lintkit.Value[str]]:
         """Yield module-scope variable binding names.
@@ -95,153 +98,10 @@ class RepetitionVariable(_Repetition, GlobalDefinition, code=40):
 class RepetitionClass(_Repetition, Class, code=41):
     """Rule checking class names in all scopes."""
 
-    kind: typing.ClassVar[str] = "class"
+    kind: typing.ClassVar[_constant.Kind] = _constant.Kind.CLASS
 
 
 class RepetitionFunction(_Repetition, Function, code=42):
     """Rule checking function names in all scopes."""
 
-    kind: typing.ClassVar[str] = "function"
-
-
-@dataclasses.dataclass(frozen=True)
-class _Candidate:
-    """Represent one declaration word and its module-wide frequency."""
-
-    name: str
-    label: str
-    word: str
-    occurrences: int
-
-
-class Name(
-    lintkit.check.Check,
-    GlobalDefinition,
-    code=43,
-):
-    """Rule checking shared words in module-scope declaration names."""
-
-    def values(
-        self,
-    ) -> collections.abc.Iterable[lintkit.Value[_Candidate]]:
-        """Yield every declaration-word candidate with its total count.
-
-        Yields:
-            Every unique declaration-word pair with the word's module-wide
-            occurrence count.
-
-        """
-        candidates = [
-            candidate
-            for node in super().nodes()
-            for candidate in self._split_node(node)
-        ]
-        counts = collections.Counter(word for _, word in candidates)
-        for node, word in candidates:
-            name = node.id if isinstance(node, ast.Name) else node.name
-            candidate = _Candidate(
-                name=name,
-                label=self._label(node),
-                word=word,
-                occurrences=counts[word],
-            )
-            yield lintkit.Value.from_python(candidate, node)
-
-    def check(self, value: lintkit.Value[_Candidate]) -> bool:
-        """Report candidates meeting the configured occurrence minimum.
-
-        Args:
-            value:
-                Declaration-word candidate with its module-wide count.
-
-        Returns:
-            Whether the candidate reaches the configured minimum.
-
-        """
-        return value.occurrences >= self.config(
-            "minimum_same_name_occurrences", 2
-        )
-
-    def message(self, value: lintkit.Value[_Candidate]) -> str:
-        """Describe the module that should own the declaration.
-
-        Args:
-            value:
-                Repeated declaration-word candidate.
-
-        Returns:
-            Diagnostic with the declaration kind, name, and module name.
-
-        """
-        return (
-            f"{value.label} '{value.name}' should be placed under module "
-            f"'{value.word}'."
-        )
-
-    def description(self) -> str:
-        """Return the public rule description.
-
-        Returns:
-            Description of the module-grouping rule.
-
-        """
-        return "Group globals with shared name words under modules."
-
-    def _split_node(
-        self,
-        node: _types.GlobalDefinitionNode,
-    ) -> tuple[tuple[_types.GlobalDefinitionNode, str], ...]:
-        """Split one declaration into unique normalized word candidates.
-
-        Args:
-            node:
-                Supported module-scope declaration.
-
-        Returns:
-            One candidate for each unique declaration word.
-
-        """
-        name = node.id if isinstance(node, ast.Name) else node.name
-        words = _split(
-            kind="class" if isinstance(node, ast.ClassDef) else "", value=name
-        )
-        normalized = (word.casefold() for word in words)
-        return tuple((node, word) for word in set(normalized))
-
-    @staticmethod
-    def _label(
-        node: _types.GlobalDefinitionNode,
-    ) -> str:  # pragma: no cover
-        """Return the human-readable declaration kind.
-
-        Args:
-            node:
-                Declaration node to classify.
-
-        Returns:
-            Variable, class, or function label.
-
-        """
-        if isinstance(node, ast.Name):
-            return "Variable"
-        if isinstance(node, ast.ClassDef):
-            return "Class"
-        return "Function"
-
-
-def _split(kind: str, value: str | lintkit.Value[str]) -> list[str]:
-    """Split a declaration name according to its kind.
-
-    Args:
-        kind:
-            Declaration kind selecting PascalCase or snake_case splitting.
-        value:
-            Declaration name or its diagnostic proxy.
-
-    Returns:
-        Words used by repetition and shared-name rules.
-
-    """
-    if kind == "class":
-        return [word for word in _words.pascal(value) if word != "Error"]
-    return _words.snake(value)
+    kind: typing.ClassVar[_constant.Kind] = _constant.Kind.FUNCTION
