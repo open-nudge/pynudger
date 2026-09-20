@@ -16,3 +16,11 @@ class MyError(ErrorBase):
 
 class RemoteResourceLoadError(ErrorBase):
     """Represent a remote resource loading error."""
+
+
+def error_first() -> None:  # noqa: PYNUDGER42
+    """Define the first error action."""
+
+
+def error_second() -> None:  # noqa: PYNUDGER42
+    """Define the second error action."""

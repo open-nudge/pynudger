@@ -13,7 +13,7 @@ import typing
 import lintkit
 
 from pynudger._loader import Class, Function, Path
-from pynudger.rule import _words
+from pynudger.rule import _constant, _words
 
 
 class _Length(lintkit.check.Check, abc.ABC):
@@ -121,7 +121,7 @@ class _Pascal(_Length):
             List of words
 
         """
-        return [word for word in _words.pascal(value) if word != "Error"]
+        return _words.pascal(value, remove_suffix=_constant.Suffix.ERROR)
 
 
 class _Snake(_Length):

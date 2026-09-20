@@ -13,6 +13,8 @@ import math as excluded_import
 user_user = 1
 account_value = excluded_import.pi
 profile_schema = 1
+__account_value = 1
+__account_bank = 1
 
 
 class LocalOwner:

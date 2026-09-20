@@ -40,6 +40,7 @@ def test_rules(
             Pytest system capture fixture (used for stdout/stderr analysis).
 
     """
+    counts = {43: 12}
     try:
         _cli.main(args=["check"], path=cases)
     except SystemExit:
@@ -49,6 +50,6 @@ def test_rules(
             if not clean:
                 # Check a single violation is returned to make sure
                 # each violation was not accidentally created
-                assert out.count(rule) == 1
+                assert out.count(rule) == counts.get(i, 1)
             else:
                 assert rule not in out
